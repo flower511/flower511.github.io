@@ -5,7 +5,7 @@ header-img: img/home
 email: hux
 description: "ins教程"
 keyword: "g, 博客, 个人网站, 互联网, W计"
-url: "https://huangxuan.me" # your host, for absolute URL
+url: "flower511.github.io" # your host, for absolute URL
 baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
