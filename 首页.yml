@@ -1,0 +1,11 @@
+# Site settings
+title: BY Blog                    # 把月亮叫醒了
+SEOTitle: 把月亮叫醒了 | BY Blog		# SEO 标题
+description: "Hey"	   	   # 随便说点，描述一下
+
+# SNS settings      
+github_username: qiub    # 你的github账号
+jianshu_username: e7192fd  # 你的简书ID。
+
+# Build settings
+# paginate: 1              # 一页你准备放几篇文章
