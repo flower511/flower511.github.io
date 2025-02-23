@@ -1,28 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月亮叫醒你了</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        /* 重置一些默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
         h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
             color: #333;
         }
-        p {
-            color: #666;
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .content h2 {
+            font-size: 1.2em;
+        }
+
+        .content p {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>公众号：月亮叫醒你了</h1>
-    <br>
-    <h2>软件下载链接：https://one.714541.xyz</h2>
-    <h2>需要加速器添加vx：272017090<h2>
-    <h2>加速器不限时使用 高速稳定 可遇不可求<h2>
-    <h2>支持win/mac/安卓/苹果<h2>
-    <ph2>油管教程、谷歌学术、苹果账号、小蓝鸟账号、ins账号、gpt账号等<h2>
-    <br>
+    <div class="content">
+        <h1>公众号：月亮叫醒你了</h1>
+        <h2>软件下载链接：<a href="https://one.714541.xyz" target="_blank">点击这里下载</a></h2>
+        <h2>需要加速器添加vx：272017090</h2>
+        <h2>加速器不限时使用，高速稳定，可遇不可求</h2>
+        <h2>支持 Win/Mac/安卓/苹果</h2>
+        <p>提供各种服务：油管教程、谷歌学术、苹果账号、小蓝鸟账号、ins账号、GPT账号等。</p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 月亮叫醒你了 | All Rights Reserved</p>
+    </div>
 </body>
 </html>
