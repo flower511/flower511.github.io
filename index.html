@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月亮叫醒你了</title>
     <style>
-        /* 重置一些默认样式 */
         * {
             margin: 0;
             padding: 0;
@@ -73,7 +72,33 @@
             color: #888;
         }
 
-        /* 响应式设计 */
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultMsg {
+            margin-top: 10px;
+            color: #4CAF50;
+        }
+
         @media (max-width: 768px) {
             .content {
                 padding: 20px;
@@ -97,10 +122,44 @@
         <h2>加速器不限时使用，高速稳定，可遇不可求</h2>
         <h2>支持 Win/Mac/安卓/苹果</h2>
         <p>提供各种服务：油管教程、谷歌学术、苹果账号、小蓝鸟账号、ins账号、GPT账号等。</p>
+
+        <h2>想获取加速器？填写微信号，系统通知我联系你</h2>
+        <form id="barkForm">
+            <input type="text" id="wechatInput" placeholder="请输入你的微信号" required>
+            <br><br>
+            <button type="submit">提交</button>
+            <p id="resultMsg"></p>
+        </form>
     </div>
 
     <div class="footer">
         <p>&copy; 2025 月亮叫醒你了 | All Rights Reserved</p>
     </div>
+
+    <script>
+        document.getElementById('barkForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const wechat = document.getElementById('wechatInput').value.trim();
+            if (!wechat) return;
+
+            const barkURL = 'https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/';
+            const title = encodeURIComponent("有人想获取加速器");
+            const body = encodeURIComponent(`微信号：${wechat}`);
+            const url = `${barkURL}${title}/${body}`;
+
+            fetch(url)
+                .then(res => {
+                    if (res.ok) {
+                        document.getElementById('resultMsg').textContent = "已成功发送通知，我会尽快联系你~";
+                        document.getElementById('wechatInput').value = '';
+                    } else {
+                        document.getElementById('resultMsg').textContent = "发送失败，请稍后再试。";
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('resultMsg').textContent = "网络错误，请重试。";
+                });
+        });
+    </script>
 </body>
 </html>
