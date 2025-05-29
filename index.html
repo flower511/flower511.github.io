@@ -1,165 +1,225 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>月亮叫醒你了</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>月亮叫醒你了</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
 
-        h1, h2 {
-            text-align: center;
-            color: #4CAF50;
-        }
+    .content {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
+    h1 {
+      font-size: 2.2em;
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
 
-        h2 {
-            font-size: 1.5em;
-            margin: 10px 0;
-            color: #333;
-        }
+    h2 {
+      font-size: 1.3em;
+      color: #333;
+      margin: 15px 0 10px;
+    }
 
-        a {
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    p {
+      font-size: 1.05em;
+      color: #555;
+      margin: 5px 0;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        .content {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        .content h2 {
-            font-size: 1.2em;
-        }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1em;
+      cursor: pointer;
+    }
 
-        .content p {
-            margin-top: 10px;
-            font-size: 1.1em;
-            color: #555;
-        }
+    .btn:hover {
+      background-color: #45a049;
+    }
 
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #888;
-        }
+    form {
+      margin-top: 30px;
+    }
 
-        input[type="text"] {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
 
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        #resultMsg {
-            margin-top: 10px;
-            color: #4CAF50;
-        }
+    #resultMsg {
+      margin-top: 10px;
+      font-weight: bold;
+    }
 
-        @media (max-width: 768px) {
-            .content {
-                padding: 20px;
-            }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #888;
+    }
 
-            h1 {
-                font-size: 2em;
-            }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
 
-            h2 {
-                font-size: 1.2em;
-            }
-        }
-    </style>
+      h2 {
+        font-size: 1.1em;
+      }
+
+      .content {
+        padding: 20px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="content">
-        <h1>公众号：月亮叫醒你了</h1>
-        <h2>软件下载链接：<a href="https://vp22p-my.sharepoint.com/:f:/g/personal/luokeke_vp22p_onmicrosoft_com/EkiJ3TVxtHpAsV7-LzJEHc0Bu_FNkTNqLrUZuR0TnH_p4Q" target="_blank">点击这里下载</a></h2>
-        <h2>需要加速器添加vx：272017090</h2>
-        <h2>加速器不限时使用，高速稳定，可遇不可求</h2>
-        <h2>支持 Win/Mac/安卓/苹果</h2>
-        <p>提供各种服务：油管教程、谷歌学术、苹果账号、小蓝鸟账号、ins账号、GPT账号等。</p>
+  <div class="content">
+    <h1>公众号：月亮叫醒你了</h1>
 
-        <h2>想获取加速器？填写微信号，系统通知我联系你</h2>
-        <form id="barkForm">
-            <input type="text" id="wechatInput" placeholder="请输入你的微信号" required>
-            <br><br>
-            <button type="submit">提交</button>
-            <p id="resultMsg"></p>
-        </form>
-    </div>
+    <h2>📥 软件一键下载：</h2>
+    <p>
+      <a href="https://vp22p-my.sharepoint.com/:f:/g/personal/luokeke_vp22p_onmicrosoft_com/EkiJ3TVxtHpAsV7-LzJEHc0Bu_FNkTNqLrUZuR0TnH_p4Q" target="_blank">
+        点击这里获取各平台客户端
+      </a>
+    </p>
 
-    <div class="footer">
-        <p>&copy; 2025 月亮叫醒你了 | All Rights Reserved</p>
-    </div>
+    <h2>🚀 高速稳定加速器，永久免费使用</h2>
+    <p>不限时、不限速，稳定可靠，可长期使用</p>
+    <p>支持平台：Windows / Mac / Android / iOS</p>
 
-    <script>
-        document.getElementById('barkForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const wechat = document.getElementById('wechatInput').value.trim();
-            if (!wechat) return;
+    <h2>🔧 我们提供以下服务：</h2>
+    <p>👉 油管/YouTube 教程观看</p>
+    <p>👉 谷歌学术访问</p>
+    <p>👉 苹果 Apple ID 共享</p>
+    <p>👉 小蓝鸟、Ins、GPT 等账号注册/使用</p>
 
-            const barkURL = 'https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/';
-            const title = encodeURIComponent("有人想获取加速器");
-            const body = encodeURIComponent(`微信号：${wechat}`);
-            const url = `${barkURL}${title}/${body}`;
+    <h2>📱 想获取加速器？添加微信联系我</h2>
+    <p>
+      微信号：<span id="wechatId" style="cursor:pointer; color:#007BFF; font-weight:bold;">272017090</span>
+    </p>
+    <p>（点击微信号可复制，添加请备注“加速器”）</p>
+    <p id="copyTip" style="font-size: 0.95em; color: #4CAF50;"></p>
 
-            fetch(url)
-                .then(res => {
-                    if (res.ok) {
-                        document.getElementById('resultMsg').textContent = "已成功发送通知，我会尽快联系你~";
-                        document.getElementById('wechatInput').value = '';
-                    } else {
-                        document.getElementById('resultMsg').textContent = "发送失败，请稍后再试。";
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('resultMsg').textContent = "网络错误，请重试。";
-                });
+    <h2>📩 不方便加？填写微信号，我主动联系你</h2>
+    <form id="barkForm">
+      <input type="text" id="wechatInput" placeholder="请输入你的微信号" required />
+      <br />
+      <button type="submit">提交微信号</button>
+      <p id="resultMsg"></p>
+    </form>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 月亮叫醒你了 | All Rights Reserved
+  </div>
+
+  <script>
+    // 微信号点击复制
+    const wechatIdEl = document.getElementById('wechatId');
+    const copyTip = document.getElementById('copyTip');
+
+    wechatIdEl.addEventListener('click', () => {
+      const wechatId = wechatIdEl.textContent.trim();
+      navigator.clipboard.writeText(wechatId).then(() => {
+        copyTip.textContent = "✅ 微信号已复制，快去添加我吧！";
+        copyTip.style.color = "#4CAF50";
+      }).catch(() => {
+        copyTip.textContent = "❌ 复制失败，请手动复制。";
+        copyTip.style.color = "#f44336";
+      });
+    });
+
+    // 提交微信号发送通知
+    document.getElementById('barkForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const wechat = document.getElementById('wechatInput').value.trim();
+      const msg = document.getElementById('resultMsg');
+      msg.style.color = "#4CAF50"; // 默认绿色
+
+      if (!wechat) {
+        msg.textContent = "请输入微信号";
+        msg.style.color = "#f44336"; // 红色
+        return;
+      }
+
+      const barkURL = 'https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/';
+      const title = encodeURIComponent("有人想获取加速器");
+      const body = encodeURIComponent(`微信号：${wechat}`);
+      const url = `${barkURL}${title}/${body}`;
+
+      fetch(url)
+        .then(res => {
+          if (res.ok) {
+            msg.textContent = "✅ 提交成功，我会尽快联系你~";
+            msg.style.color = "#4CAF50";
+            document.getElementById('wechatInput').value = '';
+          } else {
+            msg.textContent = "❌ 提交失败，请稍后再试。";
+            msg.style.color = "#f44336";
+          }
+        })
+        .catch(() => {
+          msg.textContent = "⚠️ 网络异常，请检查连接或稍后再试。";
+          msg.style.color = "#f44336";
         });
-    </script>
+    });
+  </script>
 </body>
 </html>
