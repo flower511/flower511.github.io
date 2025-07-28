@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>月亮叫醒你了</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Arial', sans-serif;
       background-color: #f8f9fa;
@@ -18,7 +13,6 @@
       line-height: 1.6;
       padding: 20px;
     }
-
     .content {
       background-color: #fff;
       border-radius: 10px;
@@ -28,35 +22,15 @@
       padding: 30px 20px;
       text-align: center;
     }
-
-    h1 {
-      font-size: 2.2em;
-      color: #4CAF50;
-      margin-bottom: 15px;
-    }
-
-    h2 {
-      font-size: 1.3em;
-      color: #333;
-      margin: 15px 0 10px;
-    }
-
-    p {
-      font-size: 1.05em;
-      color: #555;
-      margin: 5px 0;
-    }
-
+    h1 { font-size: 2.2em; color: #4CAF50; margin-bottom: 15px; }
+    h2 { font-size: 1.3em; color: #333; margin: 15px 0 10px; }
+    p { font-size: 1.05em; color: #555; margin: 5px 0; }
     a {
       color: #007BFF;
       text-decoration: none;
       font-weight: bold;
     }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
+    a:hover { text-decoration: underline; }
     .btn {
       display: inline-block;
       margin-top: 10px;
@@ -69,15 +43,8 @@
       font-size: 1em;
       cursor: pointer;
     }
-
-    .btn:hover {
-      background-color: #45a049;
-    }
-
-    form {
-      margin-top: 30px;
-    }
-
+    .btn:hover { background-color: #45a049; }
+    form { margin-top: 30px; }
     input[type="text"] {
       padding: 10px;
       width: 80%;
@@ -86,7 +53,6 @@
       border-radius: 5px;
       font-size: 1em;
     }
-
     button[type="submit"] {
       margin-top: 10px;
       padding: 10px 20px;
@@ -97,35 +63,21 @@
       font-size: 1em;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
+    button:hover { background-color: #45a049; }
     #resultMsg {
       margin-top: 10px;
       font-weight: bold;
     }
-
     .footer {
       margin-top: 40px;
       text-align: center;
       font-size: 0.9em;
       color: #888;
     }
-
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      h2 {
-        font-size: 1.1em;
-      }
-
-      .content {
-        padding: 20px 15px;
-      }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.1em; }
+      .content { padding: 20px 15px; }
     }
   </style>
 </head>
@@ -171,7 +123,7 @@
   </div>
 
   <script>
-    // 微信号点击复制
+    // 点击复制微信号
     const wechatIdEl = document.getElementById('wechatId');
     const copyTip = document.getElementById('copyTip');
 
@@ -186,25 +138,26 @@
       });
     });
 
-    // 提交微信号发送通知
+    // 提交微信号给 Bark
     document.getElementById('barkForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const wechat = document.getElementById('wechatInput').value.trim();
       const msg = document.getElementById('resultMsg');
-      msg.style.color = "#4CAF50"; // 默认绿色
+      msg.style.color = "#4CAF50";
 
       if (!wechat) {
         msg.textContent = "请输入微信号";
-        msg.style.color = "#f44336"; // 红色
+        msg.style.color = "#f44336";
         return;
       }
 
-      const barkURL = 'https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/';
-      const title = encodeURIComponent("有人想获取加速器");
-      const body = encodeURIComponent(`微信号：${wechat}`);
-      const url = `${barkURL}${title}/${body}`;
+      const barkKey = "qYjTNs3sCmaABE2BYRrhmU"; // 你的 Bark key
+      const title = "有人想获取加速器";
+      const body = `微信号：${wechat}`;
+      const barkURL = new URL(`https://api.day.app/${barkKey}/${encodeURIComponent(title)}/${encodeURIComponent(body)}`);
+      barkURL.searchParams.set("timestamp", Date.now());
 
-      fetch(url)
+      fetch(barkURL.toString())
         .then(res => {
           if (res.ok) {
             msg.textContent = "✅ 提交成功，我会尽快联系你~";
