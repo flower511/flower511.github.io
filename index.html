@@ -63,7 +63,7 @@
             margin-bottom: 0;
         }
 
-        /* 区块标题：已去掉所有冒号 */
+        /* 区块标题 */
         .section-title {
             font-size: 16px;
             color: #0f172a;
@@ -71,27 +71,30 @@
             font-weight: 600;
         }
 
-        /* 布局行 */
+        /* 布局行：改为左对齐，方便控制字和按钮的距离 */
         .row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start; 
             margin-bottom: 14px;
         }
         .row:last-child {
             margin-bottom: 0;
         }
 
-        /* 标签：已去掉冒号 */
+        /* 核心修改：放大“安卓/苹果”标签，并控制其宽度使其向按钮靠拢 */
         .label {
-            font-size: 15px;
-            color: #334155;
-            font-weight: 500;
+            font-size: 17px;          /* 字号放大 */
+            color: #1e293b;
+            font-weight: 600;         /* 字重加粗 */
+            width: 50px;              /* 固定宽度，让字和右侧按钮靠得更近 */
+            text-align: left;
         }
 
-        /* 按钮基础样式 */
+        /* 按钮基础样式：宽度占满剩余空间 */
         .btn {
-            width: 70%;
+            flex: 1;                  /* 自动填满右侧空间 */
+            margin-left: 15px;        /* 按钮距离左侧文字的间距（数字越小，文字离按钮越近） */
             border: none;
             padding: 11px;
             border-radius: 10px;
@@ -232,7 +235,7 @@
         }
     }
 
-    // 兼容老版本浏览器或特殊内置浏览器的复制备用方案
+    // 备用复制方案
     function fallbackCopy(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -252,7 +255,7 @@
         showToast('提交成功');
     }
 
-    // 自定义轻提示弹窗 (比原生漂亮的 Toast)
+    // 轻提示弹窗
     function showToast(message) {
         const toast = document.createElement('div');
         toast.textContent = message;
