@@ -63,7 +63,7 @@
             margin-bottom: 0;
         }
 
-        /* 所有区块大标题 */
+        /* 区块大标题 */
         .section-title {
             font-size: 16px;
             color: #0f172a;
@@ -71,7 +71,7 @@
             font-weight: 600;
         }
 
-        /* 统一布局行：让安卓、苹果、微信号在视觉上完美对齐 */
+        /* 统一布局行 */
         .row {
             display: flex;
             align-items: center;
@@ -82,17 +82,18 @@
             margin-bottom: 0;
         }
 
-        /* 统一的左侧标签：固定宽度、文字右对齐，紧贴右边按钮 */
+        /* 修改点：调整左侧标签宽度，使纯数字和汉字都能完美右对齐并靠紧右侧按钮 */
         .label {
             font-size: 17px;
             color: #1e293b;
             font-weight: 600;
-            width: 75px;          /* 微调宽度，确保容纳“微信号”三个字 */
-            text-align: right;
-            margin-right: 15px;
+            width: 95px;          /* 稍微拉宽以完美容纳纯数字 */
+            text-align: right;    /* 文字靠右对齐 */
+            margin-right: 15px;   /* 贴紧右边按钮的间距 */
+            white-space: nowrap;
         }
 
-        /* 统一的右侧组件宽度：限宽160px，解决太长不协调的问题 */
+        /* 统一的右侧按钮宽度：和之前一样限宽160px，解决太长不协调的问题 */
         .btn-link, .btn-copy {
             width: 160px;
             border: none;
@@ -141,11 +142,6 @@
             font-size: 14px;
             font-weight: 500;
         }
-        
-        /* 隐藏用来存号码的隐形标签，仅供JS抓取复制使用 */
-        #wechat-num {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -172,8 +168,7 @@
         <h2 class="section-title">添加微信：</h2>
         
         <div class="row">
-            <span class="label">微信号</span>
-            <span id="wechat-num">272017090</span>
+            <span id="wechat-num" class="label">272017090</span>
             <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
         </div>
     </div>
@@ -194,7 +189,7 @@
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showToast('微信号已复制');
+                showToast('复制成功，粘贴在微信搜索添加');
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
@@ -212,7 +207,7 @@
         textarea.select();
         try {
             document.execCommand('copy');
-            showToast('微信号已复制');
+            showToast('复制成功，粘贴在微信搜索添加');
         } catch (err) {
             showToast('复制失败，请手动长按复制');
         }
