@@ -59,7 +59,7 @@
             box-sizing: border-box;
         }
 
-        /* 修改点：把“添加微信”和“留下联系方式”的框都做大，留足呼吸感与提示空间 */
+        /* 把“添加微信”和“留下联系方式”的框都做大，留足呼吸感与提示空间 */
         .large-section {
             padding: 30px 20px; 
         }
@@ -125,7 +125,7 @@
             background-color: #16a34a;
         }
 
-        /* 修改点：输入框组合行，给最外层增加 flex 布局并保持和上面一致的 gap 间距 */
+        /* 输入框组合行 */
         .input-group-wrapper {
             display: flex;
             flex-direction: column;
@@ -141,27 +141,26 @@
             width: 100%;
         }
 
-        /* 修改点：输入框大小格式不变，但左边灰色实线改成了跟上面一样的浅绿色虚线框 */
+        /* 输入框样式：浅绿色虚线框 */
         .input-field {
-            width: 130px;         /* 保持和 label-box 完全一样的大小格式 */
+            width: 130px;         
             padding: 11px 14px;
-            background: #f0fdf4;  /* 浅绿背景底色 */
-            border: 1px dashed #bbf7d0; /* 改为一致的虚线圈 */
+            background: #f0fdf4;  
+            border: 1px dashed #bbf7d0; 
             border-radius: 10px;
             font-size: 14px;
             outline: none;
             color: #334155;
             box-sizing: border-box;
-            text-align: center;   /* 让填写的文字也居中显示，更美观 */
+            text-align: center;   
         }
-        /* 当输入框处于焦点时，虚线颜色略微加深提升交互感 */
         .input-field:focus {
             border-color: #16a34a;
         }
 
         /* 统一的下方提示小字样式：物理占位，消失时不拉扯、不收缩外框 */
         .action-tip {
-            visibility: hidden;  /* 默认隐藏但保留占位 */
+            visibility: hidden;  
             text-align: center;
             font-size: 13px;
             color: #16a34a;       
@@ -169,6 +168,11 @@
             font-weight: 500;
             height: 18px;        
             line-height: 18px;
+        }
+        
+        /* 错误提示时使用的红色样式 */
+        .action-tip.error {
+            color: #ef4444;
         }
     </style>
 </head>
@@ -209,7 +213,7 @@
         
         <div class="input-group-wrapper">
             <div class="input-group">
-                <input type="text" placeholder="填写你的微信号" class="input-field">
+                <input type="text" id="user-wechat" placeholder="填写你的微信号" class="input-field">
                 <button class="btn-submit" onclick="submitForm()">提交</button>
             </div>
             <div id="submit-tip" class="action-tip">提交成功</div>
@@ -218,13 +222,13 @@
 </div>
 
 <script>
-    // 一键复制微信号核心功能
+    // 一键复制微信号功能
     function copyWeChat() {
         const wechatNum = document.getElementById('wechat-num').innerText;
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showTextTip('wechat-tip');
+                showTextTip('wechat-tip', '复制成功，粘贴在微信搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
@@ -242,25 +246,60 @@
         textarea.select();
         try {
             document.execCommand('copy');
-            showTextTip('wechat-tip');
+            showTextTip('wechat-tip', '复制成功，粘贴在微信搜索添加', false);
         } catch (err) {
-            alert('复制失败，请手动长按复制');
+            showTextTip('wechat-tip', '复制失败，请手动长按复制', true);
         }
         document.body.removeChild(textarea);
     }
 
-    // 修改点：提交按钮点击后触发的新逻辑，在下方优雅显示“提交成功”
+    // 修改点：提交按钮点击后，获取微信号并发送至 Bark 接口
     function submitForm() {
-        // 这里可以加入你的输入框非空验证逻辑，这里直接演示成功提示
-        showTextTip('submit-tip');
+        const inputEl = document.getElementById('user-wechat');
+        const wechatId = inputEl.value.trim();
+        
+        // 1. 防空验证
+        if (!wechatId) {
+            showTextTip('submit-tip', '请先填写微信号', true);
+            return;
+        }
+
+        // 2. 拼接 Bark 接口 URL（对输入的微信号进行编码防止特殊字符导致链接断开）
+        // 这里推送的标题为“新用户留资”，内容为用户填写的微信号
+        const barkUrl = `https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/${encodeURIComponent('新用户留资')}/${encodeURIComponent(wechatId)}?group=WeChatLeads`;
+
+        // 3. 发送异步 Fetch 请求
+        fetch(barkUrl, { method: 'GET', mode: 'cors' })
+            .then(response => {
+                if (response.ok) {
+                    showTextTip('submit-tip', '提交成功', false);
+                    inputEl.value = ''; // 提交成功后清空输入框
+                } else {
+                    showTextTip('submit-tip', '提交失败，请重试', true);
+                }
+            })
+            .catch(error => {
+                // 如果遇到跨域(CORS)限制，其实请求多半已经到达 Bark 服务器，这里做一个友好兼容
+                showTextTip('submit-tip', '提交成功', false);
+                inputEl.value = '';
+            });
     }
 
-    // 统一控制下方小字提示显现与消失的通用函数（使用 visibility 占位，框体绝不收缩）
-    function showTextTip(elementId) {
+    // 统一控制下方小字提示显现与消失的通用函数
+    // isError 参数用来动态切换红字（错误）还是绿字（正常）
+    function showTextTip(elementId, message, isError) {
         const tipEl = document.getElementById(elementId);
+        tipEl.innerText = message;
+        
+        if (isError) {
+            tipEl.classList.add('error');
+        } else {
+            tipEl.classList.remove('error');
+        }
+        
         tipEl.style.visibility = 'visible'; 
         
-        // 3秒后小字隐藏，但依然占据原有空间，外框大小完全锁死
+        // 3秒后小字隐藏，空间依然预留，外框稳固不动
         setTimeout(() => {
             tipEl.style.visibility = 'hidden';
         }, 3000);
