@@ -95,19 +95,20 @@
             white-space: nowrap;
         }
 
-        /* 修改点：把字号从小号 13px 增大到 14.5px，并优化了行高让阅读更清晰 */
+        /* 修改点：总宽度锁死在 275px，并用 margin: 0 auto 实现完美水平居中对齐 */
         .intro-box {
-            width: 100%;
-            padding: 12px 12px;
+            width: 275px;           /* 刚好等于下面两个框加上 gap 的总宽度 */
+            margin: 0 auto;         /* 居中对齐 */
+            padding: 12px 10px;
             background: #f0fdf4;
             border: 1px dashed #bbf7d0;
             border-radius: 10px;
             box-sizing: border-box;
             color: #16a34a;
-            font-size: 14.5px;      /* 字号加大 */
+            font-size: 14.5px;      
             font-weight: 600;
             text-align: center;
-            line-height: 22px;      /* 调整行高 */
+            line-height: 22px;      
         }
 
         /* 统一右侧绿色按钮样式 */
