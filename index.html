@@ -41,7 +41,7 @@ body {
 h1 {
   font-size: 2em;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a2530;
 }
 
 .sub {
@@ -51,40 +51,53 @@ h1 {
   letter-spacing: 1px;
 }
 
-/* 三个模块大小、内边距完全对齐 */
+/* 三个模块大小完全一样，高度扩充以容纳内容下移 */
 .section {
-  height: 120px; /* 固定高度确保三个模块大小完全一样 */
+  height: 145px; 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(230, 235, 240, 0.8);
   border-radius: 16px;
-  padding: 20px;
+  padding: 22px 20px;
   margin-bottom: 16px;
 }
 
-/* 模块标题统一纯色 */
+/* 标题更明显 */
 .section-title {
-  font-size: 1em;
-  color: #2c3e50;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: 1.05em;
+  color: #1a2530;
+  font-weight: 700;
 }
 
-/* 按钮并排对齐布局 */
-.btn-group {
+/* 内容整体下移 */
+.section-content {
+  margin-top: auto; 
+}
+
+/* 下载模块排版布局 */
+.download-row {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  color: #4a5568;
+}
+.download-row:last-child {
+  margin-bottom: 0;
+}
+.download-label {
+  width: 55px;
+  font-weight: 500;
 }
 
-.btn-primary {
+.btn-download {
   flex: 1;
   display: block;
-  padding: 12px;
+  padding: 8px 12px;
   background: #3cb371;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   font-size: 0.9em;
@@ -97,10 +110,10 @@ h1 {
 .btn-disabled {
   flex: 1;
   display: block;
-  padding: 12px;
+  padding: 8px 12px;
   background: #e2e8f0;
   color: #94a3b8;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   font-size: 0.9em;
@@ -109,28 +122,24 @@ h1 {
   cursor: not-allowed;
 }
 
-/* 微信复制块布局 */
-.wechat-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.wechat-id {
-  font-size: 1.2em;
-  font-weight: 700;
-  color: #2c3e50;
-}
-
-.btn-copy {
-  padding: 10px 20px;
+/* 微信按钮样式（整个微信号就是按钮） */
+.btn-wechat-copy {
+  display: block;
+  width: 100%;
+  padding: 12px;
   background: #edf2f0;
   color: #3cb371;
-  border: none;
+  border: 1px dashed rgba(60, 179, 113, 0.4);
   border-radius: 10px;
-  font-size: 0.9em;
-  font-weight: 600;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
   cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-wechat-copy:hover {
+  background: #e2ede8;
 }
 
 /* 留资表单布局 */
@@ -170,7 +179,7 @@ input:focus {
   cursor: not-allowed;
 }
 
-/* 提示信息绝对定位或浮动，不影响模块高度 */
+/* 提示信息绝对定位，不撑开或改变模块高度 */
 .msg-tip {
   font-size: 0.85em;
   text-align: center;
@@ -191,32 +200,39 @@ input:focus {
 <div class="container">
   <div class="header">
     <h1>月亮叫醒你了</h1>
-    <div class="sub">简单 · 稳定 · 长期可用</div>
+    <div class="sub">简单 · 稳定 · 长期</div>
   </div>
 
   <div class="section">
-    <div class="section-title">软件下载：</div>
-    <div class="btn-group">
-      <a class="btn-primary" target="_blank" href="https://one.714541.xyz/@s/eVFN3ldJ">安卓下载</a>
-      <button class="btn-disabled" disabled>苹果下载</button>
+    <div class="section-title">网络工具下载：</div>
+    <div class="section-content">
+      <div class="download-row">
+        <span class="download-label">安卓：</span>
+        <a class="btn-download" target="_blank" href="https://one.714541.xyz/@s/eVFN3ldJ">下载链接</a>
+      </div>
+      <div class="download-row">
+        <span class="download-label">苹果：</span>
+        <button class="btn-disabled" disabled>appstore下载</button>
+      </div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">添加微信：</div>
-    <div class="wechat-box">
-      <div class="wechat-id" id="wechatId">272017090</div>
-      <button class="btn-copy" id="copyBtn">点击复制</button>
+    <div class="section-content">
+      <button class="btn-wechat-copy" id="copyBtn" title="点击复制微信号">gs-hjy</button>
     </div>
     <div class="tip-container"><div id="copyTip" class="msg-tip"></div></div>
   </div>
 
   <div class="section">
     <div class="section-title">或留下微信联系你：</div>
-    <form id="form" class="input-group">
-      <input id="wx" maxlength="30" placeholder="填写你的微信号">
-      <button id="btn" class="btn-submit">提交</button>
-    </form>
+    <div class="section-content">
+      <form id="form" class="input-group">
+        <input id="wx" maxlength="30" placeholder="填写你的微信号">
+        <button id="btn" class="btn-submit">提交</button>
+      </form>
+    </div>
     <div class="tip-container"><div id="resultMsg" class="msg-tip"></div></div>
   </div>
 </div>
@@ -224,8 +240,8 @@ input:focus {
 <script>
 /* 复制逻辑 */
 copyBtn.onclick = () => {
-  navigator.clipboard.writeText(wechatId.innerText).then(() => {
-    copyTip.textContent = "已复制";
+  navigator.clipboard.writeText(copyBtn.innerText).then(() => {
+    copyTip.textContent = "已复制微信号";
     copyTip.style.color = "#3cb371";
     setTimeout(() => copyTip.textContent = "", 2000);
   });
