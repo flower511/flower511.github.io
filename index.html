@@ -124,18 +124,18 @@
 
         /* 通过控制每行 div 的 margin-bottom，让每行之间的间隙绝对一致 */
         .intro-line {
-            padding: 6px 0;         /* 上下间隙完全一样，完美均摊 */
+            margin-bottom: 6px;     /* 四行文字之间绝对等宽的缝隙 */
             line-height: 1.2;
             box-sizing: border-box;
         }
         .intro-line:last-child {
-            margin-bottom: 0;       
+            margin-bottom: 0;       /* 最后一行取消底边距，保持上下完美对称 */
         }
 
-        /* 修改点：减少了第一行系统的间距，从 10px 降到 4px */
+        /* 给第一行的四个系统单独拉大横向间隙 */
         .platform-gap {
             display: inline-block;
-            margin: 0 4px;         
+            margin: 0 10px;         
         }
 
         /* 统一右侧绿色按钮样式 */
@@ -216,7 +216,7 @@
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
     <div class="section intro-section">
-        <h2 class="section-title">网络加速服务：</h2>
+        <h2 class="section-title">网络优化服务：</h2>
         <div class="intro-box">
             <div class="intro-line">
                 <span class="platform-gap">安卓</span>
