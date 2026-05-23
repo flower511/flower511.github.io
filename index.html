@@ -104,7 +104,7 @@
             white-space: nowrap;
         }
 
-        /* 修改点：砍掉一半上下死空间（从12px缩减至6px），靠内部行来把框撑饱满 */
+        /* 大框内部 padding 紧凑对称布局 */
         .intro-box {
             width: 275px;           
             margin: 0 auto;         
@@ -120,17 +120,17 @@
             letter-spacing: 0.3px;  
         }
 
-        /* 修改点：每行统一采用对称的上下内边距，确保间隙完全被匀称分摊 */
+        /* 每行统一采用对称的上下内边距，确保间隙绝对一致 */
         .intro-line {
-            padding: 6px 0;         /* 上下间隙完全一样，完美均摊 */
+            padding: 6px 0;         
             line-height: 1.2;
             box-sizing: border-box;
         }
 
-        /* 修改点：给第一行的四个系统单独拉大横向间隙 */
+        /* 第一行四个系统的横向间隙 */
         .platform-gap {
             display: inline-block;
-            margin: 0 10px;         /* 调整这个数字可以继续拉大或缩小第一行的间隙 */
+            margin: 0 10px;         
         }
 
         /* 统一右侧绿色按钮样式 */
@@ -211,7 +211,7 @@
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
     <div class="section intro-section">
-        <h2 class="section-title">网络加速服务：</h2>
+        <h2 class="section-title">网络优化服务：</h2>
         <div class="intro-box">
             <div class="intro-line">
                 <span class="platform-gap">安卓</span>
@@ -219,9 +219,9 @@
                 <span class="platform-gap">Win</span>
                 <span class="platform-gap">Mac</span>
             </div>
-            <div class="intro-line">解锁ins、x、gpt、gemini、油管等</div>
-            <div class="intro-line">保证能用，现在加入即送注册教程</div>
-            <div class="intro-line">直接复制下方微信号搜索添加</div>
+            <div class="intro-line">助力跨境电商、海外学术查阅、外贸业务加速</div>
+            <div class="intro-line">稳定不掉线，加入即送使用教程</div>
+            <div class="intro-line">直接复制下方V搜索添加</div>
         </div>
     </div>
 
@@ -240,7 +240,7 @@
     </div>
 
     <div class="section">
-        <h2 class="section-title">添加微信：</h2>
+        <h2 class="section-title">添加V：</h2>
         
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
@@ -265,7 +265,7 @@
 </div>
 
 <script>
-    // 一键复制微信号核心功能
+    // 一键复制核心功能
     function copyWeChat() {
         const wechatNum = document.getElementById('wechat-num').innerText;
         
@@ -296,7 +296,7 @@
         document.body.removeChild(textarea);
     }
 
-    // 留资发送到 Bark 接口
+    // 留资发送到 Bark 接口（已将新用户留资换成新用户）
     function submitForm() {
         const inputEl = document.getElementById('user-wechat');
         const wechatId = inputEl.value.trim();
@@ -306,7 +306,7 @@
             return;
         }
 
-        const barkUrl = `https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/${encodeURIComponent('新用户微信号')}/${encodeURIComponent(wechatId)}?group=WeChatLeads`;
+        const barkUrl = `https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/${encodeURIComponent('新用户')}/${encodeURIComponent(wechatId)}?group=WeChatLeads`;
 
         fetch(barkUrl, { method: 'GET', mode: 'cors' })
             .then(response => {
