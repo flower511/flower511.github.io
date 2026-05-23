@@ -71,48 +71,44 @@
             font-weight: 600;
         }
 
-        /* 布局行 */
+        /* 布局行：居中对齐，方便按钮缩短后依然美观 */
         .row {
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
+            justify-content: center; 
             margin-bottom: 14px;
         }
         .row:last-child {
             margin-bottom: 0;
         }
 
-        /* 放大“安卓/苹果”标签，并控制其宽度使其向按钮靠拢 */
+        /* 修改点：安卓/苹果文字加了右边距，并向右对齐，紧贴按钮 */
         .label {
             font-size: 17px;
             color: #1e293b;
             font-weight: 600;
-            width: 50px;
-            text-align: left;
+            width: 60px;
+            text-align: right;    /* 文字靠右 */
+            margin-right: 15px;   /* 与按钮的间距 */
         }
 
-        /* 按钮与链接基础样式 */
-        .btn, .btn-link {
-            flex: 1;
-            margin-left: 15px;
+        /* 修改点：缩短绿色按钮宽度，不再撑满，让视觉更协调 */
+        .btn-link {
+            width: 160px;         /* 固定按钮宽度，避免太长不协调 */
             border: none;
-            padding: 11px;
+            padding: 11px 0;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             text-align: center;
             box-sizing: border-box;
-            text-decoration: none; /* 移除链接默认下划线 */
+            text-decoration: none; 
             display: inline-block;
-        }
-
-        /* 绿色按钮样式（安卓与苹果保持一致） */
-        .btn-green {
             background-color: #22c55e;
             color: #ffffff;
         }
-        .btn-green:hover {
+        .btn-link:hover {
             background-color: #16a34a;
         }
 
@@ -192,12 +188,12 @@
         
         <div class="row">
             <span class="label">安卓</span>
-            <a href="https://one.714541.xyz/@s/eVFN3ldJ" target="_blank" class="btn-link btn-green">下载链接</a>
+            <a href="https://one.714541.xyz/@s/eVFN3ldJ" target="_blank" class="btn-link">下载链接</a>
         </div>
         
         <div class="row">
             <span class="label">苹果</span>
-            <a href="https://apps.apple.com" target="_blank" class="btn-link btn-green">App Store下载</a>
+            <a href="https://apps.apple.com" target="_blank" class="btn-link">App Store下载</a>
         </div>
     </div>
 
