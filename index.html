@@ -9,70 +9,61 @@
         body {
             background-color: #f1f5f9;
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* 缩小页面四周留白 */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
         }
 
         /* 卡片主体样式 */
         .card {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             background: #ffffff;
-            border-radius: 32px;
-            padding: 35px 24px 24px 24px;
+            border-radius: 24px;
+            padding: 20px 16px 16px 16px; /* 紧凑卡片内边距 */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
         }
 
-        /* 大标题与副标题 */
+        /* 修改点：彻底压缩大标题与副标题的间距，紧贴第一个框 */
         .main-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             color: #1e293b;
-            margin: 0 0 8px 0;
+            margin: 0 0 2px 0;
             font-weight: 700;
         }
 
         .subtitle {
             text-align: center;
             color: #94a3b8;
-            font-size: 14px;
-            margin: 0;
+            font-size: 13px;
+            margin: 0 0 15px 0; /* 控制和第一个框的距离，紧凑美观 */
             letter-spacing: 1px;
         }
 
-        /* 拉大第一段顶部的间隙 */
-        .intro-section {
-            margin-top: 45px;
-        }
-
-        /* 通用区块容器 */
+        /* 通用区块容器：压缩上下间距，实现单屏显示 */
         .section {
             background: #f8fafc;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 12px 16px; /* 减小内部间距 */
+            margin-bottom: 12px; /* 减小区块之间的间距 */
             box-sizing: border-box;
-        }
-
-        /* 大盒子间距调整 */
-        .large-section {
-            padding: 30px 20px; 
         }
         
         .section:last-of-type {
             margin-bottom: 0;
         }
 
-        /* 区块大标题：现在“网络加速服务：”也统一到了左上角 */
+        /* 区块大标题：减小底部留白 */
         .section-title {
-            font-size: 16px;
+            font-size: 14px;
             color: #0f172a;
-            margin: 0 0 16px 0;
+            margin: 0 0 10px 0;
             font-weight: 600;
             text-align: left;
         }
@@ -82,8 +73,8 @@
             display: flex;
             align-items: center;
             justify-content: center; 
-            gap: 20px;             
-            margin-bottom: 14px;
+            gap: 15px;             
+            margin-bottom: 10px;
         }
         .row:last-child {
             margin-bottom: 0;
@@ -92,11 +83,11 @@
         /* 基础虚线框样式（130px 标准款） */
         .label-box {
             width: 130px;         
-            padding: 11px 0;      
+            padding: 9px 0; /* 略微压扁高度 */     
             background: #f0fdf4;  
             border: 1px dashed #bbf7d0; 
             border-radius: 10px;
-            font-size: 15px;      
+            font-size: 14px;      
             color: #16a34a;       
             font-weight: 600;
             text-align: center;   
@@ -104,28 +95,28 @@
             white-space: nowrap;
         }
 
-        /* 修改点：大号绿色虚线框，容纳四行核心介绍，间紧凑不臃肿 */
+        /* 介绍内容绿色虚线框 */
         .intro-box {
             width: 100%;
-            padding: 15px;
+            padding: 10px 12px;
             background: #f0fdf4;
             border: 1px dashed #bbf7d0;
-            border-radius: 12px;
+            border-radius: 10px;
             box-sizing: border-box;
             color: #16a34a;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             text-align: center;
-            line-height: 24px;  /* 紧凑的行间距 */
+            line-height: 20px; /* 紧凑行高 */
         }
 
         /* 统一右侧绿色按钮样式 */
         .btn-link, .btn-copy, .btn-submit {
             width: 130px;         
             border: none;
-            padding: 11px 0;
+            padding: 9px 0; /* 略微压扁高度 */
             border-radius: 10px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             text-align: center;
@@ -153,18 +144,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
         }
 
         /* 输入框样式 */
         .input-field {
             width: 130px;         
-            padding: 11px 14px;
+            padding: 9px 12px;
             background: #f0fdf4;  
             border: 1px dashed #bbf7d0; 
             border-radius: 10px;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             color: #334155;
             box-sizing: border-box;
@@ -174,16 +165,16 @@
             border-color: #16a34a;
         }
 
-        /* 统一的下方提示小字样式 */
+        /* 统一的下方提示小字样式：缩短间距，高度压低不占过多屏幕空间 */
         .action-tip {
             visibility: hidden;  
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: #16a34a;       
-            margin-top: 12px;
+            margin-top: 6px;
             font-weight: 500;
-            height: 18px;        
-            line-height: 18px;
+            height: 14px;        
+            line-height: 14px;
         }
         .action-tip.error {
             color: #ef4444;
@@ -196,7 +187,7 @@
     <h1 class="main-title">月亮叫醒你了</h1>
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
-    <div class="section intro-section">
+    <div class="section">
         <h2 class="section-title">网络加速服务：</h2>
         <div class="intro-box">
             安卓 &nbsp;苹果 &nbsp;Win &nbsp;Mac <br>
@@ -220,19 +211,19 @@
         </div>
     </div>
 
-    <div class="section large-section">
+    <div class="section">
         <h2 class="section-title">添加微信：</h2>
         
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
-            <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 20px;">
-                <div id="wechat-num" class="label-box" style="font-size: 14px;">272017090</div>
+            <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
+                <div id="wechat-num" class="label-box" style="font-size: 13px;">272017090</div>
                 <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
             </div>
             <div id="wechat-tip" class="action-tip">复制成功，粘贴在微信搜索添加</div>
         </div>
     </div>
 
-    <div class="section large-section">
+    <div class="section">
         <h2 class="section-title">或留下微信联系你：</h2>
         
         <div class="input-group-wrapper">
