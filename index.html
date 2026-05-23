@@ -247,16 +247,16 @@
                 <div id="wechat-num" class="label-box" style="font-size: 13px;">272017090</div>
                 <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
             </div>
-            <div id="wechat-tip" class="action-tip">复制成功，粘贴在微信搜索添加</div>
+            <div id="wechat-tip" class="action-tip">复制成功，粘贴在V搜索添加</div>
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">或留下微信联系你：</h2>
+        <h2 class="section-title">或留下V联系你：</h2>
         
         <div class="input-group-wrapper">
             <div class="input-group">
-                <input type="text" id="user-wechat" placeholder="填写你的微信号" class="input-field">
+                <input type="text" id="user-wechat" placeholder="填写你的V" class="input-field">
                 <button class="btn-submit" onclick="submitForm()">提交</button>
             </div>
             <div id="submit-tip" class="action-tip">提交成功</div>
@@ -271,7 +271,7 @@
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showTextTip('wechat-tip', '复制成功，粘贴在微信搜索添加', false);
+                showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
@@ -289,20 +289,20 @@
         textarea.select();
         try {
             document.execCommand('copy');
-            showTextTip('wechat-tip', '复制成功，粘贴在微信搜索添加', false);
+            showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
         } catch (err) {
             showTextTip('wechat-tip', '复制失败，请手动长按复制', true);
         }
         document.body.removeChild(textarea);
     }
 
-    // 留资发送到 Bark 接口（已将新用户留资换成新用户）
+    // 留资发送到 Bark 接口（已换成新用户）
     function submitForm() {
         const inputEl = document.getElementById('user-wechat');
         const wechatId = inputEl.value.trim();
         
         if (!wechatId) {
-            showTextTip('submit-tip', '请先填写微信号', true);
+            showTextTip('submit-tip', '请先填写V', true);
             return;
         }
 
