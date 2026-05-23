@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网络工具下载</title>
+    <title>软件下载</title>
     <style>
         /* 基础页面背景 */
         body {
@@ -45,7 +45,7 @@
             letter-spacing: 1px;
         }
 
-        /* 核心修改：拉大第一段顶部的间隙 */
+        /* 拉大第一段顶部的间隙 */
         .download-section {
             margin-top: 45px;
         }
@@ -71,7 +71,7 @@
             font-weight: 600;
         }
 
-        /* 布局行：改为左对齐，方便控制字和按钮的距离 */
+        /* 布局行 */
         .row {
             display: flex;
             align-items: center;
@@ -82,19 +82,19 @@
             margin-bottom: 0;
         }
 
-        /* 核心修改：放大“安卓/苹果”标签，并控制其宽度使其向按钮靠拢 */
+        /* 放大“安卓/苹果”标签，并控制其宽度使其向按钮靠拢 */
         .label {
-            font-size: 17px;          /* 字号放大 */
+            font-size: 17px;
             color: #1e293b;
-            font-weight: 600;         /* 字重加粗 */
-            width: 50px;              /* 固定宽度，让字和右侧按钮靠得更近 */
+            font-weight: 600;
+            width: 50px;
             text-align: left;
         }
 
-        /* 按钮基础样式：宽度占满剩余空间 */
-        .btn {
-            flex: 1;                  /* 自动填满右侧空间 */
-            margin-left: 15px;        /* 按钮距离左侧文字的间距（数字越小，文字离按钮越近） */
+        /* 按钮与链接基础样式 */
+        .btn, .btn-link {
+            flex: 1;
+            margin-left: 15px;
             border: none;
             padding: 11px;
             border-radius: 10px;
@@ -103,18 +103,27 @@
             cursor: pointer;
             text-align: center;
             box-sizing: border-box;
+            text-decoration: none; /* 移除链接默认下划线 */
+            display: inline-block;
         }
 
-        /* 安卓绿色按钮 */
+        /* 安卓绿色按钮样式 */
         .btn-green {
             background-color: #22c55e;
             color: #ffffff;
         }
+        .btn-green:hover {
+            background-color: #16a34a;
+        }
 
-        /* 苹果灰色按钮 */
+        /* 苹果灰色按钮样式 */
         .btn-gray {
             background-color: #e2e8f0;
             color: #94a3b8;
+        }
+        .btn-gray:hover {
+            background-color: #cbd5e1;
+            color: #64748b;
         }
 
         /* 微信展示区域 */
@@ -189,16 +198,16 @@
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
     <div class="section download-section">
-        <h2 class="section-title">网络工具下载</h2>
+        <h2 class="section-title">软件下载</h2>
         
         <div class="row">
             <span class="label">安卓</span>
-            <button class="btn btn-green">下载链接</button>
+            <a href="https://one.714541.xyz/@s/eVFN3ldJ" target="_blank" class="btn-link btn-green">下载链接</a>
         </div>
         
         <div class="row">
             <span class="label">苹果</span>
-            <button class="btn btn-gray">appstore下载</button>
+            <a href="https://apps.apple.com" target="_blank" class="btn-link btn-gray">appstore下载</a>
         </div>
     </div>
 
