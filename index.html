@@ -45,6 +45,11 @@
             letter-spacing: 1px;
         }
 
+        /* 拉大第一段顶部的间隙 */
+        .intro-section {
+            margin-top: 45px;
+        }
+
         /* 通用区块容器 */
         .section {
             background: #f8fafc;
@@ -52,12 +57,6 @@
             padding: 20px;
             margin-bottom: 20px;
             box-sizing: border-box;
-        }
-
-        /* 顶部介绍专用大盒子 */
-        .intro-section {
-            margin-top: 35px;
-            padding: 24px 20px;
         }
 
         /* 大盒子间距调整 */
@@ -69,12 +68,13 @@
             margin-bottom: 0;
         }
 
-        /* 区块大标题 */
+        /* 区块大标题：现在“网络加速服务：”也统一到了左上角 */
         .section-title {
             font-size: 16px;
             color: #0f172a;
             margin: 0 0 16px 0;
             font-weight: 600;
+            text-align: left;
         }
 
         /* 统一布局行 */
@@ -104,19 +104,19 @@
             white-space: nowrap;
         }
 
-        /* 新增：专门给顶部介绍长句子准备的加宽虚线框（280px，刚好完美对称居中） */
-        .label-box-wide {
-            width: 280px;         
-            padding: 11px 10px;      
-            background: #eff6ff;  /* 采用淡淡的蓝色背景 */
-            border: 1px dashed #bfdbfe; /* 漂亮的蓝色虚线圈 */
-            border-radius: 10px;
-            font-size: 14px;      
-            color: #2563eb;       /* 蓝色文字 */
-            font-weight: 600;
-            text-align: center;   
+        /* 修改点：大号绿色虚线框，容纳四行核心介绍，间紧凑不臃肿 */
+        .intro-box {
+            width: 100%;
+            padding: 15px;
+            background: #f0fdf4;
+            border: 1px dashed #bbf7d0;
+            border-radius: 12px;
             box-sizing: border-box;
-            white-space: nowrap;
+            color: #16a34a;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 24px;  /* 紧凑的行间距 */
         }
 
         /* 统一右侧绿色按钮样式 */
@@ -197,20 +197,12 @@
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
     <div class="section intro-section">
-        <div class="row">
-            <div class="label-box-wide" style="font-size: 16px; letter-spacing: 1px;">网络加速服务：</div>
-        </div>
-        <div class="row">
-            <div class="label-box-wide">安卓 &nbsp;苹果 &nbsp;Win &nbsp;Mac</div>
-        </div>
-        <div class="row">
-            <div class="label-box-wide">解锁ins、x、gpt、gemini、油管等</div>
-        </div>
-        <div class="row">
-            <div class="label-box-wide">保证能用，现在加入即送注册教程</div>
-        </div>
-        <div class="row">
-            <div class="label-box-wide" style="background: #f0fdf4; border-color: #bbf7d0; color: #16a34a;">直接复制下方微信号搜索添加</div>
+        <h2 class="section-title">网络加速服务：</h2>
+        <div class="intro-box">
+            安卓 &nbsp;苹果 &nbsp;Win &nbsp;Mac <br>
+            解锁ins、x、gpt、gemini、油管等 <br>
+            保证能用，现在加入即送注册教程 <br>
+            直接复制下方微信号搜索添加
         </div>
     </div>
 
