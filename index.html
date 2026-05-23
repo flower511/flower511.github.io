@@ -82,18 +82,18 @@
             margin-bottom: 0;
         }
 
-        /* 修改点：调整左侧标签宽度，使纯数字和汉字都能完美右对齐并靠紧右侧按钮 */
+        /* 左侧标签：固定宽度、文字右对齐，紧贴右边按钮 */
         .label {
             font-size: 17px;
             color: #1e293b;
             font-weight: 600;
-            width: 95px;          /* 稍微拉宽以完美容纳纯数字 */
-            text-align: right;    /* 文字靠右对齐 */
-            margin-right: 15px;   /* 贴紧右边按钮的间距 */
+            width: 95px;          
+            text-align: right;    
+            margin-right: 15px;   
             white-space: nowrap;
         }
 
-        /* 统一的右侧按钮宽度：和之前一样限宽160px，解决太长不协调的问题 */
+        /* 统一的右侧按钮宽度 */
         .btn-link, .btn-copy {
             width: 160px;
             border: none;
@@ -112,6 +112,16 @@
         
         .btn-link:hover, .btn-copy:hover {
             background-color: #16a34a;
+        }
+
+        /* 修改点：文本下方的小字提示样式 */
+        .copy-tip {
+            display: none;       /* 默认隐藏，点击复制后再显示 */
+            text-align: center;
+            font-size: 13px;
+            color: #16a34a;       /* 绿字提示 */
+            margin-top: 10px;
+            font-weight: 500;
         }
 
         /* 输入框区域自适应 */
@@ -167,9 +177,12 @@
     <div class="section">
         <h2 class="section-title">添加微信：</h2>
         
-        <div class="row">
-            <span id="wechat-num" class="label">272017090</span>
-            <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
+        <div class="row" style="flex-direction: column; align-items: center;">
+            <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                <span id="wechat-num" class="label">272017090</span>
+                <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
+            </div>
+            <div id="wechat-tip" class="copy-tip">复制成功，粘贴在微信搜索添加</div>
         </div>
     </div>
 
@@ -189,7 +202,7 @@
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showToast('复制成功，粘贴在微信搜索添加');
+                showTextTip();
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
@@ -207,41 +220,26 @@
         textarea.select();
         try {
             document.execCommand('copy');
-            showToast('复制成功，粘贴在微信搜索添加');
+            showTextTip();
         } catch (err) {
-            showToast('复制失败，请手动长按复制');
+            alert('复制失败，请手动长按复制');
         }
         document.body.removeChild(textarea);
     }
 
-    function submitForm() {
-        showToast('提交成功');
+    // 修改点：控制下方小字提示显现与消失的逻辑
+    function showTextTip() {
+        const tipEl = document.getElementById('wechat-tip');
+        tipEl.style.display = 'block'; // 显示小字
+        
+        // 3秒后自动淡出消失，或者你可以删掉下面这行让它永久显示
+        setTimeout(() => {
+            tipEl.style.display = 'none';
+        }, 3000);
     }
 
-    // 轻提示弹窗
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.textContent = message;
-        toast.style.position = 'fixed';
-        toast.style.bottom = '60px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.background = 'rgba(0, 0, 0, 0.8)';
-        toast.style.color = '#ffffff';
-        toast.style.padding = '8px 16px';
-        toast.style.borderRadius = '20px';
-        toast.style.fontSize = '14px';
-        toast.style.zIndex = '9999';
-        toast.style.transition = 'opacity 0.2s';
-        
-        document.body.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(toast);
-            }, 200);
-        }, 1500);
+    function submitForm() {
+        alert('提交成功');
     }
 </script>
 
