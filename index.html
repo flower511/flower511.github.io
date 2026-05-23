@@ -9,7 +9,7 @@
         body {
             background-color: #f1f5f9;
             margin: 0;
-            padding: 10px; /* 缩小页面四周留白 */
+            padding: 10px; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,12 +24,12 @@
             max-width: 380px;
             background: #ffffff;
             border-radius: 24px;
-            padding: 20px 16px 16px 16px; /* 紧凑卡片内边距 */
+            padding: 20px 16px 16px 16px; 
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
         }
 
-        /* 修改点：彻底压缩大标题与副标题的间距，紧贴第一个框 */
+        /* 大标题与副标题 */
         .main-title {
             text-align: center;
             font-size: 24px;
@@ -42,16 +42,16 @@
             text-align: center;
             color: #94a3b8;
             font-size: 13px;
-            margin: 0 0 15px 0; /* 控制和第一个框的距离，紧凑美观 */
+            margin: 0 0 15px 0; 
             letter-spacing: 1px;
         }
 
-        /* 通用区块容器：压缩上下间距，实现单屏显示 */
+        /* 通用区块容器 */
         .section {
             background: #f8fafc;
             border-radius: 16px;
-            padding: 12px 16px; /* 减小内部间距 */
-            margin-bottom: 12px; /* 减小区块之间的间距 */
+            padding: 12px 16px; 
+            margin-bottom: 12px; 
             box-sizing: border-box;
         }
         
@@ -59,7 +59,7 @@
             margin-bottom: 0;
         }
 
-        /* 区块大标题：减小底部留白 */
+        /* 区块大标题 */
         .section-title {
             font-size: 14px;
             color: #0f172a;
@@ -83,7 +83,7 @@
         /* 基础虚线框样式（130px 标准款） */
         .label-box {
             width: 130px;         
-            padding: 9px 0; /* 略微压扁高度 */     
+            padding: 9px 0;      
             background: #f0fdf4;  
             border: 1px dashed #bbf7d0; 
             border-radius: 10px;
@@ -95,26 +95,26 @@
             white-space: nowrap;
         }
 
-        /* 介绍内容绿色虚线框 */
+        /* 修改点：把字号从小号 13px 增大到 14.5px，并优化了行高让阅读更清晰 */
         .intro-box {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 12px;
             background: #f0fdf4;
             border: 1px dashed #bbf7d0;
             border-radius: 10px;
             box-sizing: border-box;
             color: #16a34a;
-            font-size: 13px;
+            font-size: 14.5px;      /* 字号加大 */
             font-weight: 600;
             text-align: center;
-            line-height: 20px; /* 紧凑行高 */
+            line-height: 22px;      /* 调整行高 */
         }
 
         /* 统一右侧绿色按钮样式 */
         .btn-link, .btn-copy, .btn-submit {
             width: 130px;         
             border: none;
-            padding: 9px 0; /* 略微压扁高度 */
+            padding: 9px 0; 
             border-radius: 10px;
             font-size: 13px;
             font-weight: 500;
@@ -165,7 +165,7 @@
             border-color: #16a34a;
         }
 
-        /* 统一的下方提示小字样式：缩短间距，高度压低不占过多屏幕空间 */
+        /* 统一的下方提示小字样式 */
         .action-tip {
             visibility: hidden;  
             text-align: center;
