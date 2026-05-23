@@ -63,7 +63,7 @@
             margin-bottom: 0;
         }
 
-        /* 修改点：所有区块大标题后面加了冒号 */
+        /* 区块标题（已加上冒号） */
         .section-title {
             font-size: 16px;
             color: #0f172a;
@@ -71,7 +71,7 @@
             font-weight: 600;
         }
 
-        /* 布局行 */
+        /* 下载区块布局行 */
         .row {
             display: flex;
             align-items: center;
@@ -82,24 +82,19 @@
             margin-bottom: 0;
         }
 
-        /* 左侧统一标签格式：安卓、苹果、微信 */
+        /* 安卓/苹果标签靠右对齐 */
         .label {
             font-size: 17px;
             color: #1e293b;
             font-weight: 600;
             width: 60px;
-            text-align: right;    /* 文字靠右对齐 */
-            margin-right: 15px;   /* 与右侧按钮/盒子的紧贴间距 */
+            text-align: right;
+            margin-right: 15px;
         }
 
-        /* 统一的右侧组件宽度，确保上下绝对对齐且不松散 */
-        .btn-link, .wechat-box {
-            width: 160px;         /* 统一的按钮和盒子宽度 */
-            box-sizing: border-box;
-        }
-
-        /* 安卓/苹果下载链接绿色按钮样式 */
+        /* 缩短后的下载链接绿色按钮样式 */
         .btn-link {
+            width: 160px;
             border: none;
             padding: 11px 0;
             border-radius: 10px;
@@ -107,6 +102,7 @@
             font-weight: 500;
             cursor: pointer;
             text-align: center;
+            box-sizing: border-box;
             text-decoration: none; 
             display: inline-block;
             background-color: #22c55e;
@@ -116,41 +112,42 @@
             background-color: #16a34a;
         }
 
-        /* 修改点：微信展示区域样式，格式完全对齐上面的按钮 */
+        /* 微信展示区域（恢复之前的经典独立展示盒样式） */
         .wechat-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #22c55e;  /* 统一成和上面一样的绿底 */
+            background: #f0fdf4;
+            border: 1px dashed #bbf7d0;
             border-radius: 10px;
-            padding: 11px 12px;
-            cursor: pointer;      /* 让整个区域看起来都可以点击复制 */
-        }
-        .wechat-box:hover {
-            background-color: #16a34a;
+            padding: 12px 16px;
         }
 
-        /* 微信号文本 */
+        /* 新微信号展示样式 */
         .wechat-id {
-            font-size: 14px;
-            color: #ffffff;       /* 绿底配白字 */
+            font-size: 16px;
+            color: #16a34a;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
 
-        /* 复制号码小标签 */
+        /* 复制号码按钮 */
         .copy-btn {
-            background: rgba(255, 255, 255, 0.25); /* 半透明白色背景 */
+            background: #22c55e;
             color: #ffffff;
             border: none;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: #16a34a;
         }
 
-        /* 输入框区域自适应（留存微信号部分保持整行比例） */
+        /* 输入框区域 */
         .input-group {
             display: flex;
             gap: 10px;
@@ -202,13 +199,9 @@
 
     <div class="section">
         <h2 class="section-title">添加微信：</h2>
-        
-        <div class="row">
-            <span class="label">微信</span>
-            <div class="wechat-box" onclick="copyWeChat()">
-                <span id="wechat-num" class="wechat-id">272017090</span>
-                <button class="copy-btn">复制</button>
-            </div>
+        <div class="wechat-box">
+            <span id="wechat-num" class="wechat-id">272017090</span>
+            <button class="copy-btn" onclick="copyWeChat()">复制号码</button>
         </div>
     </div>
 
