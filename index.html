@@ -59,8 +59,8 @@
             box-sizing: border-box;
         }
 
-        /* 添加微信大盒子 */
-        .wechat-section {
+        /* 修改点：把“添加微信”和“留下联系方式”的框都做大，留足呼吸感与提示空间 */
+        .large-section {
             padding: 30px 20px; 
         }
         
@@ -76,37 +76,35 @@
             font-weight: 600;
         }
 
-        /* 统一布局行：两端用相同大小的组件，直接水平居中 */
+        /* 统一布局行 */
         .row {
             display: flex;
             align-items: center;
             justify-content: center; 
-            gap: 20px;             /* 左右两个框框的固定间距 */
+            gap: 20px;             
             margin-bottom: 14px;
         }
         .row:last-child {
             margin-bottom: 0;
         }
 
-        /* 修改点：左侧文本专属的虚线框样式（跟右侧按钮尺寸完全一致） */
+        /* 下载与微信：左侧文本专属的虚线框样式 */
         .label-box {
-            width: 130px;         /* 严格跟右边绿色按钮一样宽 */
-            padding: 11px 0;      /* 严格跟右边绿色按钮一样高 */
-            background: #f0fdf4;  /* 浅绿底色 */
-            border: 1px dashed #bbf7d0; /* 之前用过的经典浅绿虚线圈 */
+            width: 130px;         
+            padding: 11px 0;      
+            background: #f0fdf4;  
+            border: 1px dashed #bbf7d0; 
             border-radius: 10px;
-            font-size: 15px;      /* 稍微调匀称字号 */
-            color: #16a34a;       /* 绿字显眼 */
+            font-size: 15px;      
+            color: #16a34a;       
             font-weight: 600;
-            text-align: center;   /* 内部文字居中 */
+            text-align: center;   
             box-sizing: border-box;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* 长数字缩略防爆 */
         }
 
-        /* 右侧绿色按钮：统一缩小长度到 130px */
-        .btn-link, .btn-copy {
+        /* 统一右侧绿色按钮样式 */
+        .btn-link, .btn-copy, .btn-submit {
             width: 130px;         
             border: none;
             padding: 11px 0;
@@ -120,15 +118,50 @@
             display: inline-block;
             background-color: #22c55e;
             color: #ffffff;
+            transition: background-color 0.2s;
         }
         
-        .btn-link:hover, .btn-copy:hover {
+        .btn-link:hover, .btn-copy:hover, .btn-submit:hover {
             background-color: #16a34a;
         }
 
-        /* 提示小字样式：依旧保留物理空间，消失时不收缩框 */
-        .copy-tip {
-            visibility: hidden;  
+        /* 修改点：输入框组合行，给最外层增加 flex 布局并保持和上面一致的 gap 间距 */
+        .input-group-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* 修改点：输入框大小格式不变，但左边灰色实线改成了跟上面一样的浅绿色虚线框 */
+        .input-field {
+            width: 130px;         /* 保持和 label-box 完全一样的大小格式 */
+            padding: 11px 14px;
+            background: #f0fdf4;  /* 浅绿背景底色 */
+            border: 1px dashed #bbf7d0; /* 改为一致的虚线圈 */
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            color: #334155;
+            box-sizing: border-box;
+            text-align: center;   /* 让填写的文字也居中显示，更美观 */
+        }
+        /* 当输入框处于焦点时，虚线颜色略微加深提升交互感 */
+        .input-field:focus {
+            border-color: #16a34a;
+        }
+
+        /* 统一的下方提示小字样式：物理占位，消失时不拉扯、不收缩外框 */
+        .action-tip {
+            visibility: hidden;  /* 默认隐藏但保留占位 */
             text-align: center;
             font-size: 13px;
             color: #16a34a;       
@@ -136,35 +169,6 @@
             font-weight: 500;
             height: 18px;        
             line-height: 18px;
-        }
-
-        /* 输入框区域自适应 */
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .input-field {
-            flex: 1;
-            padding: 12px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            outline: none;
-            background: #ffffff;
-            color: #334155;
-            box-sizing: border-box;
-        }
-
-        .btn-submit {
-            background: #1e293b;
-            color: #ffffff;
-            border: none;
-            padding: 0 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
         }
     </style>
 </head>
@@ -188,7 +192,7 @@
         </div>
     </div>
 
-    <div class="section wechat-section">
+    <div class="section large-section">
         <h2 class="section-title">添加微信：</h2>
         
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
@@ -196,15 +200,19 @@
                 <div id="wechat-num" class="label-box" style="font-size: 14px;">272017090</div>
                 <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
             </div>
-            <div id="wechat-tip" class="copy-tip">复制成功，粘贴在微信搜索添加</div>
+            <div id="wechat-tip" class="action-tip">复制成功，粘贴在微信搜索添加</div>
         </div>
     </div>
 
-    <div class="section">
+    <div class="section large-section">
         <h2 class="section-title">或留下微信联系你：</h2>
-        <div class="input-group">
-            <input type="text" placeholder="填写你的微信号" class="input-field">
-            <button class="btn-submit" onclick="submitForm()">提交</button>
+        
+        <div class="input-group-wrapper">
+            <div class="input-group">
+                <input type="text" placeholder="填写你的微信号" class="input-field">
+                <button class="btn-submit" onclick="submitForm()">提交</button>
+            </div>
+            <div id="submit-tip" class="action-tip">提交成功</div>
         </div>
     </div>
 </div>
@@ -216,7 +224,7 @@
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showTextTip();
+                showTextTip('wechat-tip');
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
@@ -234,26 +242,28 @@
         textarea.select();
         try {
             document.execCommand('copy');
-            showTextTip();
+            showTextTip('wechat-tip');
         } catch (err) {
             alert('复制失败，请手动长按复制');
         }
         document.body.removeChild(textarea);
     }
 
-    // 控制下方小字提示显现与消失的逻辑
-    function showTextTip() {
-        const tipEl = document.getElementById('wechat-tip');
+    // 修改点：提交按钮点击后触发的新逻辑，在下方优雅显示“提交成功”
+    function submitForm() {
+        // 这里可以加入你的输入框非空验证逻辑，这里直接演示成功提示
+        showTextTip('submit-tip');
+    }
+
+    // 统一控制下方小字提示显现与消失的通用函数（使用 visibility 占位，框体绝不收缩）
+    function showTextTip(elementId) {
+        const tipEl = document.getElementById(elementId);
         tipEl.style.visibility = 'visible'; 
         
-        // 3秒后小字隐藏，占位依然存在，外框绝不收缩
+        // 3秒后小字隐藏，但依然占据原有空间，外框大小完全锁死
         setTimeout(() => {
             tipEl.style.visibility = 'hidden';
         }, 3000);
-    }
-
-    function submitForm() {
-        alert('提交成功');
     }
 </script>
 
