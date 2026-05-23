@@ -55,7 +55,6 @@
             box-sizing: border-box;
         }
         
-        /* 极致压缩第一个介绍区块的内边距 */
         .intro-section {
             padding-top: 10px;
             padding-bottom: 10px;
@@ -74,7 +73,6 @@
             text-align: left;
         }
 
-        /* 介绍区块标题的下方留白 */
         .intro-section .section-title {
             margin-bottom: 6px;
         }
@@ -106,11 +104,11 @@
             white-space: nowrap;
         }
 
-        /* 修改点：规范化大框内部的 padding，上下完全对称统一 */
+        /* 修改点：砍掉一半上下死空间（从12px缩减至6px），靠内部行来把框撑饱满 */
         .intro-box {
             width: 275px;           
             margin: 0 auto;         
-            padding: 12px 8px;      /* 上下内边距12px锁死，彻底杜绝多余空间 */
+            padding: 6px 8px;       
             background: #f0fdf4;
             border: 1px dashed #bbf7d0;
             border-radius: 10px;
@@ -122,13 +120,17 @@
             letter-spacing: 0.3px;  
         }
 
-        /* 修改点：通过控制每行 div 的 margin-bottom，让每行之间的间隙绝对一致 */
+        /* 修改点：每行统一采用对称的上下内边距，确保间隙完全被匀称分摊 */
         .intro-line {
-            margin-bottom: 6px;     /* 四行文字之间绝对等宽的缝隙 */
+            padding: 6px 0;         /* 上下间隙完全一样，完美均摊 */
             line-height: 1.2;
+            box-sizing: border-box;
         }
-        .intro-line:last-child {
-            margin-bottom: 0;       /* 最后一行取消底边距，保持上下完美对称 */
+
+        /* 修改点：给第一行的四个系统单独拉大横向间隙 */
+        .platform-gap {
+            display: inline-block;
+            margin: 0 10px;         /* 调整这个数字可以继续拉大或缩小第一行的间隙 */
         }
 
         /* 统一右侧绿色按钮样式 */
@@ -211,7 +213,12 @@
     <div class="section intro-section">
         <h2 class="section-title">网络加速服务：</h2>
         <div class="intro-box">
-            <div class="intro-line">安卓 &nbsp;苹果 &nbsp;Win &nbsp;Mac</div>
+            <div class="intro-line">
+                <span class="platform-gap">安卓</span>
+                <span class="platform-gap">苹果</span>
+                <span class="platform-gap">Win</span>
+                <span class="platform-gap">Mac</span>
+            </div>
             <div class="intro-line">解锁ins、x、gpt、gemini、油管等</div>
             <div class="intro-line">保证能用，现在加入即送注册教程</div>
             <div class="intro-line">直接复制下方微信号搜索添加</div>
