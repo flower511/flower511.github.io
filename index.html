@@ -58,6 +58,11 @@
             margin-bottom: 20px;
             box-sizing: border-box;
         }
+
+        /* 添加微信大盒子 */
+        .wechat-section {
+            padding: 30px 20px; 
+        }
         
         .section:last-of-type {
             margin-bottom: 0;
@@ -82,20 +87,31 @@
             margin-bottom: 0;
         }
 
-        /* 左侧标签：固定宽度、文字右对齐，紧贴右边按钮 */
-        .label {
+        /* 安卓和苹果专用的文字标签：拉大间距到 30px */
+        .label-download {
             font-size: 17px;
             color: #1e293b;
             font-weight: 600;
             width: 95px;          
             text-align: right;    
-            margin-right: 15px;   
+            margin-right: 30px;   /* 下载行拉大间距 */
             white-space: nowrap;
         }
 
-        /* 统一的右侧按钮宽度 */
+        /* 修改点：微信号专属的文字标签，不拉长间距，保持 15px 避免挤出框 */
+        .label-wechat {
+            font-size: 17px;
+            color: #1e293b;
+            font-weight: 600;
+            width: 95px;          
+            text-align: right;    
+            margin-right: 15px;   /* 长数字不拉大间距 */
+            white-space: nowrap;
+        }
+
+        /* 右侧绿色按钮：统一缩小长度到 130px */
         .btn-link, .btn-copy {
-            width: 160px;
+            width: 130px;         
             border: none;
             padding: 11px 0;
             border-radius: 10px;
@@ -114,14 +130,16 @@
             background-color: #16a34a;
         }
 
-        /* 修改点：文本下方的小字提示样式 */
+        /* 提示小字样式：依旧保留物理空间，消失时不收缩框 */
         .copy-tip {
-            display: none;       /* 默认隐藏，点击复制后再显示 */
+            visibility: hidden;  
             text-align: center;
             font-size: 13px;
-            color: #16a34a;       /* 绿字提示 */
-            margin-top: 10px;
+            color: #16a34a;       
+            margin-top: 12px;
             font-weight: 500;
+            height: 18px;        
+            line-height: 18px;
         }
 
         /* 输入框区域自适应 */
@@ -164,22 +182,22 @@
         <h2 class="section-title">软件下载：</h2>
         
         <div class="row">
-            <span class="label">安卓</span>
+            <span class="label-download">安卓</span>
             <a href="https://one.714541.xyz/@s/eVFN3ldJ" target="_blank" class="btn-link">下载链接</a>
         </div>
         
         <div class="row">
-            <span class="label">苹果</span>
+            <span class="label-download">苹果</span>
             <a href="https://apps.apple.com" target="_blank" class="btn-link">App Store下载</a>
         </div>
     </div>
 
-    <div class="section">
+    <div class="section wechat-section">
         <h2 class="section-title">添加微信：</h2>
         
         <div class="row" style="flex-direction: column; align-items: center;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
-                <span id="wechat-num" class="label">272017090</span>
+                <span id="wechat-num" class="label-wechat">272017090</span>
                 <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
             </div>
             <div id="wechat-tip" class="copy-tip">复制成功，粘贴在微信搜索添加</div>
@@ -227,14 +245,14 @@
         document.body.removeChild(textarea);
     }
 
-    // 修改点：控制下方小字提示显现与消失的逻辑
+    // 控制下方小字提示显现与消失的逻辑
     function showTextTip() {
         const tipEl = document.getElementById('wechat-tip');
-        tipEl.style.display = 'block'; // 显示小字
+        tipEl.style.visibility = 'visible'; 
         
-        // 3秒后自动淡出消失，或者你可以删掉下面这行让它永久显示
+        // 3秒后小字隐藏，由于用的是 visibility，占位依然存在，外框绝不收缩
         setTimeout(() => {
-            tipEl.style.display = 'none';
+            tipEl.style.visibility = 'hidden';
         }, 3000);
     }
 
