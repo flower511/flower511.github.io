@@ -22,139 +22,139 @@ body {
 
 .container {
   width: 100%;
-  max-width: 480px;
+  max-width: 440px;
   background: rgba(255, 255, 255, 0.85);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 24px;
-  padding: 40px 30px;
+  padding: 40px 26px;
   box-shadow: 0 20px 40px rgba(140, 150, 170, 0.1);
 }
 
-/* 头部设计 */
+/* 头部纯色标题 */
 .header {
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 h1 {
-  font-size: 2.1em;
+  font-size: 2em;
   font-weight: 600;
   color: #2c3e50;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #2c3e50, #3cb371);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .sub {
-  margin-top: 8px;
+  margin-top: 6px;
   color: #8a9aa9;
   font-size: 0.9em;
   letter-spacing: 1px;
 }
 
-/* 模块通用样式 */
+/* 三个模块大小、内边距完全对齐 */
 .section {
+  height: 120px; /* 固定高度确保三个模块大小完全一样 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(230, 235, 240, 0.8);
   border-radius: 16px;
   padding: 20px;
-  margin-bottom: 20px;
-  transition: transform 0.2s;
-}
-.section:hover {
-  transform: translateY(-2px);
+  margin-bottom: 16px;
 }
 
-/* 安卓下载区 */
-.download-box {
-  text-align: center;
-}
-.download-title {
-  font-size: 1.05em;
-  color: #333;
+/* 模块标题统一纯色 */
+.section-title {
+  font-size: 1em;
+  color: #2c3e50;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 12px;
 }
-.download-desc {
-  font-size: 0.85em;
-  color: #7f8c8d;
-  margin-bottom: 14px;
+
+/* 按钮并排对齐布局 */
+.btn-group {
+  display: flex;
+  gap: 10px;
 }
+
 .btn-primary {
+  flex: 1;
   display: block;
-  width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: #3cb371;
   color: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
   text-decoration: none;
-  font-size: 0.95em;
-  box-shadow: 0 4px 12px rgba(60, 179, 113, 0.2);
-  transition: opacity 0.2s;
-}
-.btn-primary:hover {
-  opacity: 0.9;
+  font-size: 0.9em;
+  text-align: center;
+  border: none;
+  cursor: pointer;
 }
 
-/* 微信联系区 */
+/* 苹果假按钮样式 */
+.btn-disabled {
+  flex: 1;
+  display: block;
+  padding: 12px;
+  background: #e2e8f0;
+  color: #94a3b8;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9em;
+  text-align: center;
+  border: none;
+  cursor: not-allowed;
+}
+
+/* 微信复制块布局 */
 .wechat-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.wechat-info label {
-  display: block;
-  font-size: 0.8em;
-  color: #95a5a6;
-  text-transform: uppercase;
-}
+
 .wechat-id {
   font-size: 1.2em;
   font-weight: 700;
   color: #2c3e50;
-  margin-top: 2px;
 }
+
 .btn-copy {
-  padding: 8px 16px;
+  padding: 10px 20px;
   background: #edf2f0;
   color: #3cb371;
   border: none;
-  border-radius: 8px;
-  font-size: 0.85em;
+  border-radius: 10px;
+  font-size: 0.9em;
   font-weight: 600;
   cursor: pointer;
 }
 
-/* 留资表单区 */
-.form-title {
-  font-size: 0.95em;
-  color: #5c6b73;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
+/* 留资表单布局 */
 .input-group {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
+
 input {
   flex: 1;
-  padding: 12px 16px;
+  padding: 12px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #fff;
-  font-size: 0.95em;
+  font-size: 0.9em;
   outline: none;
-  transition: border-color 0.2s;
 }
+
 input:focus {
   border-color: #3cb371;
 }
+
 .btn-submit {
-  padding: 0 20px;
+  padding: 0 24px;
   border: none;
   border-radius: 10px;
   background: #2c3e50;
@@ -164,30 +164,24 @@ input:focus {
   cursor: pointer;
   white-space: nowrap;
 }
+
 .btn-submit:disabled {
   background: #cbd5e1;
   cursor: not-allowed;
 }
 
-/* 提示与状态 */
-.tip-text {
-  font-size: 0.8em;
-  color: #94a3b8;
-  margin-top: 8px;
-  text-align: center;
-}
-#copyTip, #resultMsg {
+/* 提示信息绝对定位或浮动，不影响模块高度 */
+.msg-tip {
   font-size: 0.85em;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 4px;
   font-weight: 500;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.stats {
-  margin-top: 25px;
-  text-align: center;
-  font-size: 0.75em;
-  color: #b2bec3;
-  letter-spacing: 0.5px;
+.tip-container {
+  position: relative;
 }
 </style>
 </head>
@@ -200,55 +194,40 @@ input:focus {
     <div class="sub">简单 · 稳定 · 长期可用</div>
   </div>
 
-  <div class="section download-box">
-    <div class="download-title">安卓软件下载</div>
-    <div class="download-desc">支持常见安卓手机及设备</div>
-    <a class="btn-primary" target="_blank" href="https://one.714541.xyz/@s/eVFN3ldJ">
-      立即打开获取页面
-    </a>
-  </div>
-
   <div class="section">
-    <div class="wechat-box">
-      <div class="wechat-info">
-        <label>添加微信</label>
-        <div class="wechat-id" id="wechatId">272017090</div>
-      </div>
-      <button class="btn-copy" id="copyBtn">复制微信号</button>
+    <div class="section-title">软件下载：</div>
+    <div class="btn-group">
+      <a class="btn-primary" target="_blank" href="https://one.714541.xyz/@s/eVFN3ldJ">安卓下载</a>
+      <button class="btn-disabled" disabled>苹果下载</button>
     </div>
-    <div id="copyTip"></div>
-    <div class="tip-text">复制后打开微信搜索添加</div>
   </div>
 
   <div class="section">
-    <div class="form-title">没找到？留下微信我来联系你</div>
+    <div class="section-title">添加微信：</div>
+    <div class="wechat-box">
+      <div class="wechat-id" id="wechatId">272017090</div>
+      <button class="btn-copy" id="copyBtn">点击复制</button>
+    </div>
+    <div class="tip-container"><div id="copyTip" class="msg-tip"></div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">或留下微信联系你：</div>
     <form id="form" class="input-group">
       <input id="wx" maxlength="30" placeholder="填写你的微信号">
       <button id="btn" class="btn-submit">提交</button>
     </form>
-    <div id="resultMsg"></div>
-    <div class="tip-text">没加上的话，通常会在每天晚上统一处理</div>
+    <div class="tip-container"><div id="resultMsg" class="msg-tip"></div></div>
   </div>
-
-  <div class="stats" id="stats"></div>
 </div>
 
 <script>
-/* 统计逻辑 */
-let views = localStorage.views = (Number(localStorage.views)||0)+1;
-let submits = Number(localStorage.submits||0);
-function renderStats(){
-  let rate = submits ? ((submits/views)*100).toFixed(1) : 0;
-  stats.textContent = `访客 ${views} · 留存 ${submits} · 转化 ${rate}%`;
-}
-renderStats();
-
 /* 复制逻辑 */
 copyBtn.onclick = () => {
   navigator.clipboard.writeText(wechatId.innerText).then(() => {
-    copyTip.textContent = "✅ 微信号已复制，去微信搜索吧";
+    copyTip.textContent = "已复制";
     copyTip.style.color = "#3cb371";
-    setTimeout(() => copyTip.textContent = "", 3000);
+    setTimeout(() => copyTip.textContent = "", 2000);
   });
 };
 
@@ -258,21 +237,17 @@ form.onsubmit = e => {
   if(!wx.value.trim()) return;
 
   btn.disabled = true;
-  btn.textContent = "正在提交...";
+  btn.textContent = "提交中";
 
   fetch(`https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/新用户/${encodeURIComponent(wx.value)}`);
 
-  submits++;
-  localStorage.submits = submits;
-  renderStats();
-
-  resultMsg.textContent = "✅ 提交成功，请留意微信好友申请";
+  resultMsg.textContent = "已收到";
   resultMsg.style.color = "#3cb371";
 
   btn.disabled = false;
   btn.textContent = "提交";
   wx.value = "";
-  setTimeout(() => resultMsg.textContent = "", 4000);
+  setTimeout(() => resultMsg.textContent = "", 2000);
 };
 </script>
 
