@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>软件下载</title>
+    <title>月亮叫醒你了</title>
     <style>
         /* 基础页面背景 */
         body {
@@ -93,7 +93,7 @@
 
         /* 基础虚线框样式（130px 标准款） */
         .label-box {
-            width: 130px;         
+            width: 130px;
             padding: 9px 0;      
             background: #f0fdf4;  
             border: 1px dashed #bbf7d0; 
@@ -101,14 +101,14 @@
             font-size: 14px;      
             color: #16a34a;       
             font-weight: 600;
-            text-align: center;   
+            text-align: center;
             box-sizing: border-box;
             white-space: nowrap;
         }
 
         /* 规范化大框内部的 padding，上下完全对称统一 */
         .intro-box {
-            width: 275px;           
+            width: 275px;
             margin: 0 auto;         
             padding: 12px 8px;      /* 上下内边距12px锁死，彻底杜绝多余空间 */
             background: #f0fdf4;
@@ -119,17 +119,19 @@
             font-size: 15.5px;      
             font-weight: 600;
             text-align: center;
-            letter-spacing: 0.3px;  
+            letter-spacing: 0.3px;
         }
 
         /* 通过控制每行 div 的 margin-bottom，让每行之间的间隙绝对一致 */
         .intro-line {
-            margin-bottom: 6px;     /* 四行文字之间绝对等宽的缝隙 */
+            margin-bottom: 6px;
+            /* 四行文字之间绝对等宽的缝隙 */
             line-height: 1.2;
             box-sizing: border-box;
         }
         .intro-line:last-child {
-            margin-bottom: 0;       /* 最后一行取消底边距，保持上下完美对称 */
+            margin-bottom: 0;
+            /* 最后一行取消底边距，保持上下完美对称 */
         }
 
         /* 给第一行的四个系统单独拉大横向间隙 */
@@ -140,7 +142,7 @@
 
         /* 统一右侧绿色按钮样式 */
         .btn-link, .btn-copy, .btn-submit {
-            width: 130px;         
+            width: 130px;
             border: none;
             padding: 9px 0; 
             border-radius: 10px;
@@ -149,7 +151,7 @@
             cursor: pointer;
             text-align: center;
             box-sizing: border-box;
-            text-decoration: none; 
+            text-decoration: none;
             display: inline-block;
             background-color: #22c55e;
             color: #ffffff;
@@ -178,7 +180,7 @@
 
         /* 输入框样式 */
         .input-field {
-            width: 130px;         
+            width: 130px;
             padding: 9px 12px;
             background: #f0fdf4;  
             border: 1px dashed #bbf7d0; 
@@ -195,7 +197,7 @@
 
         /* 统一的下方提示小字样式 */
         .action-tip {
-            visibility: hidden;  
+            visibility: hidden;
             text-align: center;
             font-size: 12px;
             color: #16a34a;       
@@ -267,7 +269,8 @@
 <script>
     // 一键复制V核心功能
     function copyWeChat() {
-        const wechatNum = document.getElementById('wechat-num').innerText;
+        // 这里直接锁死需要复制的内容，不再去读取页面的“点击按钮”四个字
+        const wechatNum = "272017090";
         
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
@@ -307,7 +310,6 @@
         }
 
         const barkUrl = `https://api.day.app/qYjTNs3sCmaABE2BYRrhmU/${encodeURIComponent('新用户')}/${encodeURIComponent(wechatId)}?group=WeChatLeads`;
-
         fetch(barkUrl, { method: 'GET', mode: 'cors' })
             .then(response => {
                 if (response.ok) {
@@ -334,8 +336,7 @@
             tipEl.classList.remove('error');
         }
         
-        tipEl.style.visibility = 'visible'; 
-        
+        tipEl.style.visibility = 'visible';
         setTimeout(() => {
             tipEl.style.visibility = 'hidden';
         }, 3000);
