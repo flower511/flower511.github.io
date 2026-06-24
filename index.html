@@ -109,7 +109,7 @@
             white-space: nowrap;
         }
 
-        /* 规范化大框内部的 padding，上下完全对称统一 */
+        /* 规范化大框内部的 padding */
         .intro-box {
             width: 275px;
             margin: 0 auto;         
@@ -205,15 +205,16 @@
             color: #ef4444;
         }
 
-        /* ================= 动态二维码图片样式 ================= */
+        /* ================= 动态二维码图片样式（已拉长并防止裁剪） ================= */
         .qrcode-img {
             display: none; 
             width: 130px;
-            height: 130px;
+            height: 150px; /* 💡 修改点：将高度往上拉长至 150px，确保容纳完整的二维码和其上下边缘 */
             border-radius: 12px;
             border: 1px dashed #bbf7d0;
             box-sizing: border-box;
-            object-fit: cover;
+            object-fit: contain; /* 💡 修改点：改用 contain 模式，即使拉长，图片也会完整自适应比例显示，不被裁剪 */
+            background-color: #ffffff; /* 补充背景，防止透明图边缘产生视觉断层 */
         }
 
         /* ================= 微信指引遮罩层样式 ================= */
@@ -343,12 +344,15 @@
     function initEnvironment() {
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
+            // 💡 微信环境下为了配合二维码被拉长到150px，将左边的小方框内边距也同步拉长，实现完美水平对称
+            document.getElementById('wechat-num').style.padding = '19px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'none';
             document.getElementById('qrcode-ctrl').style.display = 'block';
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '点击按钮';
+            document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
