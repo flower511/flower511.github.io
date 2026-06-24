@@ -110,7 +110,7 @@
         .intro-box {
             width: 275px;
             margin: 0 auto;         
-            padding: 12px 8px;      /* 上下内边距12px锁死，彻底杜绝多余空间 */
+            padding: 12px 8px;      
             background: #f0fdf4;
             border: 1px dashed #bbf7d0;
             border-radius: 10px;
@@ -130,12 +130,6 @@
         }
         .intro-line:last-child {
             margin-bottom: 0;
-        }
-
-        /* 给第一行的四个系统单独拉大横向间隙 */
-        .platform-gap {
-            display: inline-block;
-            margin: 0 10px;         
         }
 
         /* 统一右侧绿色按钮样式 */
@@ -210,18 +204,17 @@
 
         /* ================= 微信指引遮罩层样式 ================= */
         .weixin-mask {
-            display: none; /* 默认隐藏 */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* 黑色半透明背景 */
-            z-index: 9999; /* 确保在最上层 */
+            background-color: rgba(0, 0, 0, 0.85); 
+            z-index: 9999; 
             box-sizing: border-box;
         }
         
-        /* 遮罩内的内容排版 */
         .mask-content {
             position: absolute;
             top: 20px;
@@ -231,17 +224,17 @@
             padding: 10px;
         }
 
-        /* CSS纯代码绘制指引右上角的箭头 */
+        /* 纯 CSS 绘制指引右上角的绿色箭头 */
         .mask-arrow {
             width: 0;
             height: 0;
             border-left: 12px solid transparent;
             border-right: 12px solid transparent;
-            border-bottom: 20px solid #22c55e; /* 绿色箭头 */
+            border-bottom: 20px solid #22c55e; 
             margin-left: auto;
             margin-right: 15px;
             margin-bottom: 10px;
-            transform: rotate(35deg); /* 微微倾斜指向右上角 */
+            transform: rotate(35deg); 
         }
 
         .mask-text {
@@ -252,7 +245,21 @@
         }
         
         .mask-text span {
-            color: #22c55e; /* 高亮绿色 */
+            color: #22c55e; 
+        }
+
+        /* 强制测遮罩试按钮（正式上线可以删掉或不管它，藏在最底下看不见） */
+        .test-btn {
+            display: block;
+            margin: 20px auto 0 auto;
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            opacity: 0.3;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -277,12 +284,12 @@
         
         <div class="row">
             <div class="label-box">安卓</div>
-            <a href="https://one.714541.xyz/@s/eVFN3ldJ" target="_blank" class="btn-link" onclick="return handleDownload(event, this.href)">下载链接</a>
+            <a href="javascript:void(0);" class="btn-link" onclick="handleDownload('https://one.714541.xyz/@s/eVFN3ldJ')">下载链接</a>
         </div>
         
         <div class="row">
             <div class="label-box">苹果</div>
-            <a href="https://apps.apple.com" target="_blank" class="btn-link" onclick="return handleDownload(event, this.href)">App Store下载</a>
+            <a href="javascript:void(0);" class="btn-link" onclick="handleDownload('https://apps.apple.com')">App Store下载</a>
         </div>
     </div>
 
@@ -309,6 +316,8 @@
             <div id="submit-tip" class="action-tip">提交成功</div>
         </div>
     </div>
+
+    <button class="test-btn" onclick="forceShowMask()">点此强行预览遮罩效果</button>
 </div>
 
 <div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
@@ -326,19 +335,23 @@
     // 检测是否在微信内置浏览器中
     function isWeChat() {
         const ua = navigator.userAgent.toLowerCase();
-        return ua.indexOf('micromessenger') !== -1;
+        return (ua.indexOf('micromessenger') !== -1) || (ua.indexOf('wxwork') !== -1);
     }
 
-    // 处理下载按钮点击逻辑
-    function handleDownload(event, url) {
+    // 处理下载按钮点击核心重构
+    function handleDownload(url) {
         if (isWeChat()) {
-            // 如果是微信环境，拦截跳转，显示遮罩层
-            event.preventDefault();
+            // 如果是在微信环境，直接展示遮罩层
             document.getElementById('weixin-mask').style.display = 'block';
-            return false;
+        } else {
+            // 正常浏览器环境，直接通过 JS 开启跳转
+            window.location.href = url;
         }
-        // 非微信环境，放行允许正常跳转下载
-        return true;
+    }
+
+    // 强行预览函数（测试排查用）
+    function forceShowMask() {
+        document.getElementById('weixin-mask').style.display = 'block';
     }
 
     // 点击遮罩层任意地方可以隐藏它
@@ -349,7 +362,6 @@
     // 一键复制V核心功能
     function copyWeChat() {
         const wechatNum = "272017090";
-        
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
                 showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
