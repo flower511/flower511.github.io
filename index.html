@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月亮叫醒你了</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <style>
         /* 基础页面背景 */
         body {
@@ -202,6 +205,17 @@
             color: #ef4444;
         }
 
+        /* ================= 动态二维码图片样式 ================= */
+        .qrcode-img {
+            display: none; /* 默认隐藏，仅在微信内通过 JS 开启 */
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            border: 1px dashed #bbf7d0;
+            box-sizing: border-box;
+            object-fit: cover;
+        }
+
         /* ================= 微信指引遮罩层样式 ================= */
         .weixin-mask {
             display: none; 
@@ -247,20 +261,6 @@
         .mask-text span {
             color: #22c55e; 
         }
-
-        /* 强制测遮罩试按钮（正式上线可以删掉或不管它，藏在最底下看不见） */
-        .test-btn {
-            display: block;
-            margin: 20px auto 0 auto;
-            background: #ef4444;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            opacity: 0.3;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -275,7 +275,7 @@
             <div class="intro-line">安卓、苹果、Win、Mac</div>
             <div class="intro-line">助力学术查阅、业务加速</div>
             <div class="intro-line">保证能用，加入即送使用教程</div>
-            <div class="intro-line">直接复制下方V搜索添加</div>
+            <div id="intro-tip-line" class="intro-line">直接复制下方V搜索添加</div>
         </div>
     </div>
 
@@ -299,7 +299,10 @@
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
                 <div id="wechat-num" class="label-box" style="font-size: 13px;">点击按钮</div>
-                <button class="btn-copy" onclick="copyWeChat()">复制号码</button>
+                
+                <button id="btn-copy-ctrl" class="btn-copy" onclick="copyWeChat()">复制号码</button>
+                
+                <img id="qrcode-ctrl" src="https://tu.714541.xyz/wx.jpg" alt="微信二维码" class="qrcode-img">
             </div>
             <div id="wechat-tip" class="action-tip">复制成功，粘贴在V搜索添加</div>
         </div>
@@ -316,8 +319,6 @@
             <div id="submit-tip" class="action-tip">提交成功</div>
         </div>
     </div>
-
-    <button class="test-btn" onclick="forceShowMask()">点此强行预览遮罩效果</button>
 </div>
 
 <div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
@@ -338,20 +339,37 @@
         return (ua.indexOf('micromessenger') !== -1) || (ua.indexOf('wxwork') !== -1);
     }
 
-    // 处理下载按钮点击核心重构
-    function handleDownload(url) {
+    // 💡 核心新增：初始化页面环境，根据微信或非微信展示不同的功能组件
+    function initEnvironment() {
         if (isWeChat()) {
-            // 如果是在微信环境，直接展示遮罩层
-            document.getElementById('weixin-mask').style.display = 'block';
+            // 1. 微信环境：改写提示文字为“长按扫码”
+            document.getElementById('wechat-num').innerText = '长按扫码';
+            // 2. 微信环境：隐藏复制按钮
+            document.getElementById('btn-copy-ctrl').style.display = 'none';
+            // 3. 微信环境：展现二维码图片
+            document.getElementById('qrcode-ctrl').style.display = 'block';
+            // 4. 微信环境：顺便把顶部介绍栏的“复制下方V”也改成“长按下方二维码”
+            document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
+            // 5. 微信环境：把无用的下方提示字空间抹除，防止多余留白
+            document.getElementById('wechat-tip').style.display = 'none';
         } else {
-            // 正常浏览器环境，直接通过 JS 开启跳转
-            window.location.href = url;
+            // 浏览器环境：确保维持原本的样式与逻辑
+            document.getElementById('wechat-num').innerText = '点击按钮';
+            document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
+            document.getElementById('qrcode-ctrl').style.display = 'none';
         }
     }
 
-    // 强行预览函数（测试排查用）
-    function forceShowMask() {
-        document.getElementById('weixin-mask').style.display = 'block';
+    // 执行环境初始化
+    window.onload = initEnvironment;
+
+    // 处理下载按钮点击拦截
+    function handleDownload(url) {
+        if (isWeChat()) {
+            document.getElementById('weixin-mask').style.display = 'block';
+        } else {
+            window.location.href = url;
+        }
     }
 
     // 点击遮罩层任意地方可以隐藏它
@@ -359,7 +377,7 @@
         document.getElementById('weixin-mask').style.display = 'none';
     }
 
-    // 一键复制V核心功能
+    // 一键复制V核心功能（仅在普通浏览器中生效）
     function copyWeChat() {
         const wechatNum = "272017090";
         if (navigator.clipboard && navigator.clipboard.writeText) {
