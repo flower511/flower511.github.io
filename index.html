@@ -305,6 +305,13 @@
                 
                 <img id="qrcode-ctrl" src="https://tu.714541.xyz/wx.jpg" alt="微信二维码" class="qrcode-img">
             </div>
+            
+            <!-- 💡 新增：专门在外部浏览器下使用的文章跳转引流按钮行 -->
+            <div id="browser-jump-row" class="row" style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px; margin-top: 10px;">
+                <div class="label-box">扫码添加</div>
+                <a href="https://mp.weixin.qq.com/s/eBpG1PQHgvH0kNSjkqJZbA" target="_blank" class="btn-link">点击跳转</a>
+            </div>
+            
             <div id="wechat-tip" class="action-tip">复制成功，粘贴在V搜索添加</div>
         </div>
     </div>
@@ -350,12 +357,18 @@
             document.getElementById('qrcode-ctrl').style.display = 'block';
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
+            
+            // 💡 微信内部打开时，隐藏浏览器跳转按钮行
+            document.getElementById('browser-jump-row').style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '点击按钮';
             document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
+            
+            // 💡 外部浏览器打开时，确保跳转按钮正常显示并拉开间距
+            document.getElementById('browser-jump-row').style.display = 'flex';
         }
     }
 
@@ -381,7 +394,7 @@
         const wechatNum = "_714541xyz";
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
+                showTextTip('wechat-tip', '复制成功，粘贴 in V 搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
