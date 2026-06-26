@@ -209,12 +209,12 @@
         .qrcode-img {
             display: none; 
             width: 130px;
-            height: 150px; /* 💡 修改点：将高度往上拉长至 150px，确保容纳完整的二维码和其上下边缘 */
+            height: 150px; 
             border-radius: 12px;
             border: 1px dashed #bbf7d0;
             box-sizing: border-box;
-            object-fit: contain; /* 💡 修改点：改用 contain 模式，即使拉长，图片也会完整自适应比例显示，不被裁剪 */
-            background-color: #ffffff; /* 补充背景，防止透明图边缘产生视觉断层 */
+            object-fit: contain; 
+            background-color: #ffffff; 
         }
 
         /* ================= 微信指引遮罩层样式 ================= */
@@ -299,6 +299,7 @@
         
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
+                <!-- 💡 修改点：默认文本改为了“号码添加” -->
                 <div id="wechat-num" class="label-box" style="font-size: 13px;">号码添加</div>
                 
                 <button id="btn-copy-ctrl" class="btn-copy" onclick="copyWeChat()">复制号码</button>
@@ -306,7 +307,7 @@
                 <img id="qrcode-ctrl" src="https://tu.714541.xyz/wx.jpg" alt="微信二维码" class="qrcode-img">
             </div>
             
-            <!-- 💡 新增：专门在外部浏览器下使用的文章跳转引流按钮行 -->
+            <!-- 专门在外部浏览器下使用的文章跳转引流按钮行 -->
             <div id="browser-jump-row" class="row" style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px; margin-top: 10px;">
                 <div class="label-box">扫码添加</div>
                 <a href="https://mp.weixin.qq.com/s/eBpG1PQHgvH0kNSjkqJZbA" target="_blank" class="btn-link">点击跳转</a>
@@ -351,23 +352,24 @@
     function initEnvironment() {
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
-            // 💡 微信环境下为了配合二维码被拉长到150px，将左边的小方框内边距也同步拉长，实现完美水平对称
+            // 微信环境下为了配合二维码被拉长到150px，将左边的小方框内边距也同步拉长，实现完美水平对称
             document.getElementById('wechat-num').style.padding = '19px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'none';
             document.getElementById('qrcode-ctrl').style.display = 'block';
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
             
-            // 💡 微信内部打开时，隐藏浏览器跳转按钮行
+            // 微信内部打开时，隐藏浏览器跳转按钮行
             document.getElementById('browser-jump-row').style.display = 'none';
         } else {
-            document.getElementById('wechat-num').innerText = '点击按钮';
+            // 💡 修改点：非微信（外部浏览器）环境下动态还原成“号码添加”
+            document.getElementById('wechat-num').innerText = '号码添加';
             document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
             
-            // 💡 外部浏览器打开时，确保跳转按钮正常显示并拉开间距
+            // 外部浏览器打开时，确保跳转按钮正常显示并拉开间距
             document.getElementById('browser-jump-row').style.display = 'flex';
         }
     }
