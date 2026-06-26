@@ -299,7 +299,6 @@
         
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
-                <!-- 💡 修改点：默认文本改为了“号码添加” -->
                 <div id="wechat-num" class="label-box" style="font-size: 13px;">号码添加</div>
                 
                 <button id="btn-copy-ctrl" class="btn-copy" onclick="copyWeChat()">复制号码</button>
@@ -362,7 +361,6 @@
             // 微信内部打开时，隐藏浏览器跳转按钮行
             document.getElementById('browser-jump-row').style.display = 'none';
         } else {
-            // 💡 修改点：非微信（外部浏览器）环境下动态还原成“号码添加”
             document.getElementById('wechat-num').innerText = '号码添加';
             document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
@@ -396,7 +394,8 @@
         const wechatNum = "_714541xyz";
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                showTextTip('wechat-tip', '复制成功，粘贴 in V 搜索添加', false);
+                // 💡 修改点：将原先带有 "in V" 的英文文案改成了全中文提示
+                showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
             });
