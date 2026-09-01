@@ -262,6 +262,14 @@
         .mask-text span {
             color: #22c55e; 
         }
+
+        /* ================= VoceChat 挂件右下角精确样式 ================= */
+        #VOCECHAT_WIDGET {
+            right: 20px !important;
+            bottom: 20px !important;
+            left: auto !important;
+            z-index: 9998; /* 保证挂件浮在卡片之上，但低于遮罩层的 9999 */
+        }
     </style>
 </head>
 <body>
@@ -351,23 +359,18 @@
     function initEnvironment() {
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
-            // 微信环境下为了配合二维码被拉长到150px，将左边的小方框内边距也同步拉长，实现完美水平对称
             document.getElementById('wechat-num').style.padding = '19px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'none';
             document.getElementById('qrcode-ctrl').style.display = 'block';
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
-            
-            // 微信内部打开时，隐藏浏览器跳转按钮行
             document.getElementById('browser-jump-row').style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '号码添加';
-            document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
+            document.getElementById('wechat-num').style.padding = '9px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
-            
-            // 外部浏览器打开时，确保跳转按钮正常显示并拉开间距
             document.getElementById('browser-jump-row').style.display = 'flex';
         }
     }
@@ -394,7 +397,6 @@
         const wechatNum = "_714541xyz";
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                // 💡 修改点：将原先带有 "in V" 的英文文案改成了全中文提示
                 showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
@@ -462,6 +464,28 @@
             tipEl.style.visibility = 'hidden';
         }, 3000);
     }
+</script>
+
+<!-- ================= VoceChat 咨询窗口挂件 SDK ================= -->
+<script 
+    data-host-id="1" 
+    data-auto-reg="true" 
+    data-login-token="" 
+    data-title="在线客服咨询" 
+    data-logo="" 
+    data-position="right"
+    data-theme-color="#22c55e" 
+    data-close-width="48" 
+    data-close-height="48" 
+    data-open-width="380" 
+    data-open-height="680" 
+    data-welcome="👋 您好，请问有什么可以帮您？" 
+    data-popup-title="在线咨询" 
+    data-popup-subtitle="遇到问题？点击即可联系在线客服！" 
+    data-popup-image="" 
+    data-popup-closable="true" 
+    src="https://chat.714541.xyz/widget.js" 
+    async>
 </script>
 
 </body>
