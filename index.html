@@ -8,7 +8,6 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <style>
-        /* 基础页面背景 */
         body {
             background-color: #f1f5f9;
             margin: 0;
@@ -21,7 +20,6 @@
             box-sizing: border-box;
         }
 
-        /* 卡片主体样式 */
         .card {
             width: 100%;
             max-width: 380px;
@@ -32,7 +30,6 @@
             box-sizing: border-box;
         }
 
-        /* 大标题与副标题 */
         .main-title {
             text-align: center;
             font-size: 24px;
@@ -49,7 +46,6 @@
             letter-spacing: 1px;
         }
 
-        /* 通用区块容器 */
         .section {
             background: #f8fafc;
             border-radius: 16px;
@@ -205,7 +201,6 @@
             background-color: #ffffff; 
         }
 
-        /* ================= 微信全屏黑幕遮罩 ================= */
         .weixin-mask {
             position: fixed;
             top: 0;
@@ -250,7 +245,6 @@
             50% { transform: translateY(-10px) translateX(5px); }
         }
 
-        /* ================= 悬浮客服挂件样式 ================= */
         #chat-widget-container {
             position: fixed;
             bottom: 20px;
@@ -348,7 +342,6 @@
         }
         .chat-msg img:hover { opacity: 0.9; }
 
-        /* 与 Web 端完全一致的底部输入工具栏 */
         #chat-input-area {
             display: flex;
             align-items: center;
@@ -416,7 +409,6 @@
         }
         #chat-trigger:hover { transform: scale(1.05); }
 
-        /* 全局大图灯箱预览模态框 */
         #chat-image-lightbox {
             display: none;
             position: fixed;
@@ -508,14 +500,12 @@
     </div>
 </div>
 
-<!-- ================= 微信全屏黑幕遮罩 ================= -->
 <div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
     <div class="mask-arrow">↗</div>
     <div class="mask-tip">请点击右上角菜单<br>选择 “在浏览器打开”</div>
     <div class="mask-sub-tip">暂不支持在微信内直接操作</div>
 </div>
 
-<!-- ================= 悬浮客服挂件容器 ================= -->
 <div id="chat-widget-container">
     <div id="chat-panel">
         <div id="chat-header">
@@ -535,7 +525,6 @@
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
 </div>
 
-<!-- 全屏大图灯箱模态层 -->
 <div id="chat-image-lightbox" onclick="closeLightbox()">
     <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
     <img id="lightbox-img" src="" onclick="event.stopPropagation()">
@@ -648,7 +637,6 @@
         setTimeout(() => { tipEl.style.visibility = 'hidden'; }, 3000);
     }
 
-    /* ================= 悬浮客服挂件核心逻辑 ================= */
     const API_BASE = 'https://chat.714541.xyz';
 
     let myUserId = localStorage.getItem('chat_uid');
@@ -658,7 +646,7 @@
     }
 
     let myUserName = localStorage.getItem('chat_uname');
-    if (!myUserName) {
+    if (!myUserName || myUserName.startsWith('用户_')) {
         myUserName = '访客_' + myUserId.slice(-4);
         localStorage.setItem('chat_uname', myUserName);
     }
