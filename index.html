@@ -261,7 +261,7 @@
             color: #22c55e; 
         }
 
-        /* ================= 悬浮客服挂件样式 (支持右下角缩放) ================= */
+        /* ================= 悬浮客服挂件样式 (支持右下角缩放与图片显示) ================= */
         #chat-widget-container {
             position: fixed;
             bottom: 20px;
@@ -272,8 +272,8 @@
 
         #chat-panel {
             display: none;
-            width: 320px;
-            height: 450px;
+            width: 330px;
+            height: 460px;
             min-width: 270px;
             min-height: 340px;
             max-width: 90vw;
@@ -330,14 +330,12 @@
             line-height: 1.4;
             word-break: break-all;
         }
-        /* 访客发言气泡 */
         .chat-msg.visitor {
             align-self: flex-end;
             background: #dcfce7;
             color: #14532d;
             border: 1px solid #bbf7d0;
         }
-        /* 客服回复气泡 */
         .chat-msg.kefu {
             align-self: flex-start;
             background: #ffffff;
@@ -350,6 +348,14 @@
             margin-bottom: 2px;
             opacity: 0.8;
         }
+        .chat-msg img {
+            max-width: 100%;
+            max-height: 160px;
+            border-radius: 6px;
+            margin-top: 4px;
+            display: block;
+            cursor: pointer;
+        }
 
         #chat-input-area {
             display: flex;
@@ -357,16 +363,23 @@
             padding: 8px;
             background: #fff;
             flex-shrink: 0;
+            align-items: center;
         }
-        #chat-input-area input {
+        #chat-input-area input[type="text"] {
             padding: 7px 10px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             outline: none;
             font-size: 13px;
         }
+        #img-btn {
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+            user-select: none;
+        }
         #chat-send-btn {
-            padding: 7px 14px;
+            padding: 7px 12px;
             background: #22c55e;
             color: white;
             border: none;
@@ -374,6 +387,7 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
+            white-space: nowrap;
         }
         #chat-send-btn:hover { background: #16a34a; }
 
@@ -465,7 +479,7 @@
     </div>
 </div>
 
-<!-- ================= 悬浮客服挂件 ================= -->
+<!-- ================= 悬浮客服挂件容器 ================= -->
 <div id="chat-widget-container">
     <div id="chat-panel">
         <div id="chat-header">
@@ -475,7 +489,11 @@
         <div id="chat-status">连接状态: 正在建立长连接...</div>
         <div id="chat-content"></div>
         <form id="chat-input-area" onsubmit="sendChatMsg(event)">
-            <input id="chat-user-name" placeholder="昵称" style="width: 50px;" value="访客" />
+            <label id="img-btn" title="发送图片">
+                📷
+                <input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="uploadImage(event)">
+            </label>
+            <input id="chat-user-name" placeholder="昵称" style="width: 45px;" value="访客" />
             <input id="chat-user-text" placeholder="输入咨询内容..." style="flex: 1;" autocomplete="off" />
             <button type="submit" id="chat-send-btn">发送</button>
         </form>
@@ -490,7 +508,6 @@
         return (ua.indexOf('micromessenger') !== -1) || (ua.indexOf('wxwork') !== -1);
     }
 
-    // 初始化页面环境
     function initEnvironment() {
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
@@ -586,10 +603,9 @@
         setTimeout(() => { tipEl.style.visibility = 'hidden'; }, 3000);
     }
 
-    /* ================= 悬浮客服挂件逻辑 (已接入 HTTPS: chat.714541.xyz) ================= */
+    /* ================= 悬浮客服挂件核心逻辑 (带图片自动压缩) ================= */
     const API_BASE = 'https://chat.714541.xyz';
 
-    // 访客持久化唯一标识
     let myUserId = localStorage.getItem('chat_uid');
     if (!myUserId) {
         myUserId = 'user_' + Math.random().toString(36).substring(2, 9);
@@ -598,23 +614,14 @@
 
     const chatStatusEl = document.getElementById('chat-status');
 
-    // 访客发送消息
-    async function sendChatMsg(e) {
-        e.preventDefault();
-        const textInput = document.getElementById('chat-user-text');
-        const nameInput = document.getElementById('chat-user-name');
-        const text = textInput.value.trim();
-        const name = nameInput.value.trim() || '访客';
-
-        if (!text) return;
-
-        textInput.value = '';
-
+    // 底层通用发送函数
+    async function postMsg(content) {
+        const name = document.getElementById('chat-user-name').value.trim() || '访客';
         try {
             await fetch(`${API_BASE}/api/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: myUserId, sender: name, text: text })
+                body: JSON.stringify({ userId: myUserId, sender: name, text: content })
             });
             fetchHistory();
         } catch (err) {
@@ -622,7 +629,54 @@
         }
     }
 
-    // 拉取历史消息
+    // 访客发送文本消息
+    function sendChatMsg(e) {
+        e.preventDefault();
+        const textInput = document.getElementById('chat-user-text');
+        const text = textInput.value.trim();
+        if (!text) return;
+        textInput.value = '';
+        postMsg(text);
+    }
+
+    // 访客发送图片（前端 Canvas 自动高压缩至 1024px / 质量 0.7）
+    function uploadImage(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            const img = new Image();
+            img.onload = function() {
+                const MAX_SIZE = 1024;
+                let w = img.width;
+                let h = img.height;
+
+                if (w > h && w > MAX_SIZE) {
+                    h = Math.round((h * MAX_SIZE) / w);
+                    w = MAX_SIZE;
+                } else if (h > MAX_SIZE) {
+                    w = Math.round((w * MAX_SIZE) / h);
+                    h = MAX_SIZE;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+
+                // 压缩为轻量 JPEG
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                postMsg(compressedBase64);
+            };
+            img.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
+    }
+
+    // 拉取历史消息并渲染
     async function fetchHistory() {
         try {
             const res = await fetch(`${API_BASE}/api/messages?userId=${myUserId}`);
@@ -638,7 +692,15 @@
                     const div = document.createElement('div');
                     const isKefu = m.sender === '客服';
                     div.className = `chat-msg ${isKefu ? 'kefu' : 'visitor'}`;
-                    div.innerHTML = `<b>${m.sender}</b>${m.text}`;
+
+                    let contentHtml = '';
+                    if (m.text.startsWith('data:image/')) {
+                        contentHtml = `<img src="${m.text}" onclick="window.open(this.src)" title="点击查看大图" />`;
+                    } else {
+                        contentHtml = m.text;
+                    }
+
+                    div.innerHTML = `<b>${m.sender}</b>${contentHtml}`;
                     chatBox.appendChild(div);
                 });
                 chatBox.scrollTop = chatBox.scrollHeight;
@@ -649,7 +711,7 @@
         }
     }
 
-    // 切换折叠与展开
+    // 展开/折叠面板
     function toggleChat() {
         const panel = document.getElementById('chat-panel');
         const trigger = document.getElementById('chat-trigger');
@@ -663,7 +725,7 @@
         }
     }
 
-    // 每 3 秒自动拉取一次客服的最新回复
+    // 每 3 秒自动轮询一次新回复
     setInterval(fetchHistory, 3000);
 </script>
 
