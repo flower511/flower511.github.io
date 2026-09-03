@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>月亮叫醒你了</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -216,49 +216,49 @@
             background-color: #ffffff; 
         }
 
-        /* 微信指引遮罩层样式 */
+        /* ================= 微信全屏黑幕遮罩 (同步统一规格) ================= */
         .weixin-mask {
-            display: none; 
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); 
-            z-index: 9999; 
+            background: #000000;
+            z-index: 2147483647;
+            display: none;
+            color: white;
             box-sizing: border-box;
+            padding: 20px 20px calc(20px + env(safe-area-inset-bottom)) 20px;
+            cursor: pointer;
         }
-        
-        .mask-content {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: #ffffff;
+        .weixin-mask .mask-arrow {
             text-align: right;
-            padding: 10px;
+            font-size: 65px;
+            color: #22c55e;
+            line-height: 1;
+            padding-right: 15px;
+            font-weight: bold;
+            animation: bounce 1.5s infinite;
         }
-
-        .mask-arrow {
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-bottom: 20px solid #22c55e; 
-            margin-left: auto;
-            margin-right: 15px;
-            margin-bottom: 10px;
-            transform: rotate(35deg); 
-        }
-
-        .mask-text {
-            font-size: 16px;
+        .weixin-mask .mask-tip {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 20px;
             font-weight: 600;
-            line-height: 1.6;
-            text-align: right;
+            line-height: 1.8;
+            color: #ffffff;
         }
-        
-        .mask-text span {
-            color: #22c55e; 
+        .weixin-mask .mask-sub-tip {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(5px); }
         }
 
         /* ================= 悬浮客服挂件样式 ================= */
@@ -503,15 +503,11 @@
     </div>
 </div>
 
+<!-- ================= 微信全屏黑幕遮罩 (同步规格) ================= -->
 <div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
-    <div class="mask-content">
-        <div class="mask-arrow"></div>
-        <div class="mask-text">
-            点击右上角 <span>•••</span><br>
-            选择 <span>在浏览器中打开</span><br>
-            即可正常下载安装软件
-        </div>
-    </div>
+    <div class="mask-arrow">↗</div>
+    <div class="mask-tip">请点击右上角菜单<br>选择 “在浏览器打开”</div>
+    <div class="mask-sub-tip">暂不支持在微信内直接操作</div>
 </div>
 
 <!-- ================= 悬浮客服挂件容器 ================= -->
