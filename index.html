@@ -2,35 +2,23 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月亮叫醒你了</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <style>
         /* 基础页面背景 */
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             background-color: #f1f5f9;
+            margin: 0;
             padding: 10px; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        /* 微信环境下直接给页面全局置黑，杜绝缝隙反白 */
-        body.is-wx {
-            background-color: #000000 !important;
-            overflow: hidden !important;
+            box-sizing: border-box;
         }
 
         /* 卡片主体样式 */
@@ -70,6 +58,7 @@
             box-sizing: border-box;
         }
         
+        /* 极致压缩第一个介绍区块的内边距 */
         .intro-section {
             padding-top: 10px;
             padding-bottom: 10px;
@@ -79,6 +68,7 @@
             margin-bottom: 0;
         }
 
+        /* 区块大标题 */
         .section-title {
             font-size: 14px;
             color: #0f172a;
@@ -87,10 +77,12 @@
             text-align: left;
         }
 
+        /* 介绍区块标题的下方留白 */
         .intro-section .section-title {
             margin-bottom: 6px;
         }
 
+        /* 统一布局行 */
         .row {
             display: flex;
             align-items: center;
@@ -102,6 +94,7 @@
             margin-bottom: 0;
         }
 
+        /* 基础虚线框样式（130px 标准款） */
         .label-box {
             width: 130px;
             padding: 9px 0;      
@@ -116,6 +109,7 @@
             white-space: nowrap;
         }
 
+        /* 规范化大框内部的 padding */
         .intro-box {
             width: 275px;
             margin: 0 auto;         
@@ -140,6 +134,7 @@
             margin-bottom: 0;
         }
 
+        /* 统一右侧绿色按钮样式 */
         .btn-link, .btn-copy, .btn-submit {
             width: 130px;
             border: none;
@@ -161,6 +156,7 @@
             background-color: #16a34a;
         }
 
+        /* 输入框组合行 */
         .input-group-wrapper {
             display: flex;
             flex-direction: column;
@@ -176,6 +172,7 @@
             width: 100%;
         }
 
+        /* 输入框样式 */
         .input-field {
             width: 130px;
             padding: 9px 12px;
@@ -192,6 +189,7 @@
             border-color: #16a34a;
         }
 
+        /* 统一的下方提示小字样式 */
         .action-tip {
             visibility: hidden;
             text-align: center;
@@ -206,6 +204,7 @@
             color: #ef4444;
         }
 
+        /* 动态二维码图片样式 */
         .qrcode-img {
             display: none; 
             width: 130px;
@@ -217,48 +216,49 @@
             background-color: #ffffff; 
         }
 
-        /* ================= 微信全屏无缝黑幕遮罩 ================= */
+        /* 微信指引遮罩层样式 */
         .weixin-mask {
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
             width: 100%;
             height: 100%;
-            background: #000000;
-            z-index: 2147483647;
-            display: none;
-            color: white;
+            background-color: rgba(0, 0, 0, 0.85); 
+            z-index: 9999; 
             box-sizing: border-box;
-            padding: 20px 20px calc(20px + env(safe-area-inset-bottom)) 20px;
         }
-        .weixin-mask .mask-arrow {
-            text-align: right;
-            font-size: 65px;
-            color: #22c55e;
-            line-height: 1;
-            padding-right: 15px;
-            font-weight: bold;
-            animation: bounce 1.5s infinite;
-        }
-        .weixin-mask .mask-tip {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 1.8;
+        
+        .mask-content {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             color: #ffffff;
+            text-align: right;
+            padding: 10px;
         }
-        .weixin-mask .mask-sub-tip {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #94a3b8;
+
+        .mask-arrow {
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 20px solid #22c55e; 
+            margin-left: auto;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            transform: rotate(35deg); 
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-10px) translateX(5px); }
+
+        .mask-text {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.6;
+            text-align: right;
+        }
+        
+        .mask-text span {
+            color: #22c55e; 
         }
 
         /* ================= 悬浮客服挂件样式 ================= */
@@ -447,7 +447,7 @@
 </head>
 <body>
 
-<div id="card-wrap" class="card">
+<div class="card">
     <h1 class="main-title">月亮叫醒你了</h1>
     <p class="subtitle">简单 · 稳定 · 长期</p>
 
@@ -503,11 +503,15 @@
     </div>
 </div>
 
-<!-- ================= 微信全屏黑幕遮罩 ================= -->
-<div id="weixin-mask" class="weixin-mask">
-    <div class="mask-arrow">↗</div>
-    <div class="mask-tip">请点击右上角菜单<br>选择 “在浏览器打开”</div>
-    <div class="mask-sub-tip">微信内暂不支持直接访问与下载</div>
+<div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
+    <div class="mask-content">
+        <div class="mask-arrow"></div>
+        <div class="mask-text">
+            点击右上角 <span>•••</span><br>
+            选择 <span>在浏览器中打开</span><br>
+            即可正常下载安装软件
+        </div>
+    </div>
 </div>
 
 <!-- ================= 悬浮客服挂件容器 ================= -->
@@ -539,6 +543,7 @@
 </div>
 
 <script>
+    // 检测是否在微信内置浏览器中
     function isWeChat() {
         const ua = navigator.userAgent.toLowerCase();
         return (ua.indexOf('micromessenger') !== -1) || (ua.indexOf('wxwork') !== -1);
@@ -546,19 +551,18 @@
 
     function initEnvironment() {
         const chatWidget = document.getElementById('chat-widget-container');
-        const cardWrap = document.getElementById('card-wrap');
-        const mask = document.getElementById('weixin-mask');
-
         if (isWeChat()) {
-            document.body.classList.add('is-wx');
-            if (mask) mask.style.display = 'block';
-            if (cardWrap) cardWrap.style.display = 'none';
+            document.getElementById('wechat-num').innerText = '长按扫码';
+            document.getElementById('wechat-num').style.padding = '19px 0';
+            document.getElementById('btn-copy-ctrl').style.display = 'none';
+            document.getElementById('qrcode-ctrl').style.display = 'block';
+            document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
+            document.getElementById('wechat-tip').style.display = 'none';
+            document.getElementById('browser-jump-row').style.display = 'none';
+            
+            // 微信内部直接隐藏嵌入式客服
             if (chatWidget) chatWidget.style.display = 'none';
         } else {
-            document.body.classList.remove('is-wx');
-            if (mask) mask.style.display = 'none';
-            if (cardWrap) cardWrap.style.display = 'block';
-            
             document.getElementById('wechat-num').innerText = '号码添加';
             document.getElementById('wechat-num').style.padding = '9px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
@@ -566,6 +570,7 @@
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
             document.getElementById('browser-jump-row').style.display = 'flex';
             
+            // 外部浏览器显示挂件并启动轮询
             if (chatWidget) chatWidget.style.display = 'block';
             setInterval(fetchHistory, 3000);
         }
@@ -579,6 +584,10 @@
         } else {
             window.location.href = url;
         }
+    }
+
+    function hideMask() {
+        document.getElementById('weixin-mask').style.display = 'none';
     }
 
     function copyWeChat() {
@@ -654,6 +663,7 @@
 
     const chatStatusEl = document.getElementById('chat-status');
 
+    // 图片灯箱控制
     function openLightbox(src) {
         document.getElementById('lightbox-img').src = src;
         document.getElementById('chat-image-lightbox').style.display = 'flex';
@@ -663,6 +673,7 @@
         document.getElementById('lightbox-img').src = '';
     }
 
+    // 底层通用发送
     async function postMsg(content) {
         const name = document.getElementById('chat-user-name').value.trim() || '访客';
         try {
@@ -677,6 +688,7 @@
         }
     }
 
+    // 发送文本
     function sendChatMsg(e) {
         e.preventDefault();
         const textInput = document.getElementById('chat-user-text');
@@ -686,6 +698,7 @@
         postMsg(text);
     }
 
+    // 发送图片（Canvas 压缩）
     function uploadImage(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -721,7 +734,9 @@
         e.target.value = '';
     }
 
+    // 拉取历史消息
     async function fetchHistory() {
+        // 如果在微信内，不执行拉取
         if (isWeChat()) return;
 
         try {
@@ -757,6 +772,7 @@
         }
     }
 
+    // 展开/收起面板
     function toggleChat() {
         const panel = document.getElementById('chat-panel');
         const trigger = document.getElementById('chat-trigger');
