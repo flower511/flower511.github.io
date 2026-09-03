@@ -524,7 +524,6 @@
                 📷
                 <input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="uploadImage(event)">
             </label>
-            <input id="chat-user-name" placeholder="昵称" style="width: 45px;" value="访客" />
             <input id="chat-user-text" placeholder="输入咨询内容..." style="flex: 1;" autocomplete="off" />
             <button type="submit" id="chat-send-btn">发送</button>
         </form>
@@ -657,6 +656,13 @@
         localStorage.setItem('chat_uid', myUserId);
     }
 
+    // 随机生成固定访客昵称（例如：访客_a1b2）
+    let myUserName = localStorage.getItem('chat_uname');
+    if (!myUserName) {
+        myUserName = '访客_' + myUserId.slice(-4);
+        localStorage.setItem('chat_uname', myUserName);
+    }
+
     const chatStatusEl = document.getElementById('chat-status');
 
     // 图片灯箱控制
@@ -671,12 +677,11 @@
 
     // 底层通用发送
     async function postMsg(content) {
-        const name = document.getElementById('chat-user-name').value.trim() || '访客';
         try {
             await fetch(`${API_BASE}/api/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: myUserId, sender: name, text: content })
+                body: JSON.stringify({ userId: myUserId, sender: myUserName, text: content })
             });
             fetchHistory();
         } catch (err) {
