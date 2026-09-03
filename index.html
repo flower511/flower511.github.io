@@ -205,7 +205,7 @@
             color: #ef4444;
         }
 
-        /* ================= 动态二维码图片样式（已拉长并防止裁剪） ================= */
+        /* 动态二维码图片样式 */
         .qrcode-img {
             display: none; 
             width: 130px;
@@ -217,7 +217,7 @@
             background-color: #ffffff; 
         }
 
-        /* ================= 微信指引遮罩层样式 ================= */
+        /* 微信指引遮罩层样式 */
         .weixin-mask {
             display: none; 
             position: fixed;
@@ -239,7 +239,6 @@
             padding: 10px;
         }
 
-        /* 纯 CSS 绘制指引右上角的绿色箭头 */
         .mask-arrow {
             width: 0;
             height: 0;
@@ -262,6 +261,140 @@
         .mask-text span {
             color: #22c55e; 
         }
+
+        /* ================= 悬浮客服挂件样式 (自适应缩放) ================= */
+        #chat-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2147483647;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        #chat-panel {
+            display: none;
+            width: 320px;
+            height: 450px;
+            min-width: 270px;
+            min-height: 340px;
+            max-width: 90vw;
+            max-height: 85vh;
+            resize: both; /* 启用右下角拉伸缩放 */
+            overflow: hidden;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 12px;
+            flex-direction: column;
+        }
+
+        #chat-header {
+            background: #22c55e;
+            color: white;
+            padding: 12px 14px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        #close-chat { cursor: pointer; font-size: 18px; line-height: 1; }
+
+        #chat-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.92);
+            background: #22c55e;
+            padding: 0 14px 8px 14px;
+            flex-shrink: 0;
+        }
+
+        #chat-content {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            background: #f8fafc;
+            box-sizing: border-box;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            word-break: break-all;
+        }
+        /* 访客自身发送的气泡 */
+        .chat-msg.visitor {
+            align-self: flex-end;
+            background: #dcfce7;
+            color: #14532d;
+            border: 1px solid #bbf7d0;
+        }
+        /* 客服回复的气泡 */
+        .chat-msg.kefu {
+            align-self: flex-start;
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+        .chat-msg b {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 2px;
+            opacity: 0.8;
+        }
+
+        #chat-input-area {
+            display: flex;
+            gap: 6px;
+            padding: 8px;
+            background: #fff;
+            flex-shrink: 0;
+        }
+        #chat-input-area input {
+            padding: 7px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 13px;
+        }
+        #chat-send-btn {
+            padding: 7px 14px;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        #chat-send-btn:hover { background: #16a34a; }
+
+        #chat-trigger {
+            width: 52px;
+            height: 52px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 22px;
+            float: right;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        #chat-trigger:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -282,12 +415,10 @@
 
     <div class="section">
         <h2 class="section-title">软件下载：</h2>
-        
         <div class="row">
             <div class="label-box">安卓</div>
             <a href="javascript:void(0);" class="btn-link" onclick="handleDownload('https://one.714541.xyz/@s/eVFN3ldJ')">下载链接</a>
         </div>
-        
         <div class="row">
             <div class="label-box">苹果</div>
             <a href="javascript:void(0);" class="btn-link" onclick="handleDownload('https://apps.apple.com')">App Store下载</a>
@@ -296,17 +427,13 @@
 
     <div class="section">
         <h2 class="section-title">添加V：</h2>
-        
         <div class="row" style="flex-direction: column; align-items: center; gap: 0;">
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px;">
                 <div id="wechat-num" class="label-box" style="font-size: 13px;">号码添加</div>
-                
                 <button id="btn-copy-ctrl" class="btn-copy" onclick="copyWeChat()">复制号码</button>
-                
                 <img id="qrcode-ctrl" src="https://tu.714541.xyz/wx.jpg" alt="微信二维码" class="qrcode-img">
             </div>
             
-            <!-- 专门在外部浏览器下使用的文章跳转引流按钮行 -->
             <div id="browser-jump-row" class="row" style="display: flex; align-items: center; justify-content: center; width: 100%; gap: 15px; margin-top: 10px;">
                 <div class="label-box">扫码添加</div>
                 <a href="https://mp.weixin.qq.com/s/eBpG1PQHgvH0kNSjkqJZbA" target="_blank" class="btn-link">点击跳转</a>
@@ -318,7 +445,6 @@
 
     <div class="section">
         <h2 class="section-title">或留下V联系你：</h2>
-        
         <div class="input-group-wrapper">
             <div class="input-group">
                 <input type="text" id="user-wechat" placeholder="填写你的V" class="input-field">
@@ -340,6 +466,24 @@
     </div>
 </div>
 
+<!-- ================= 悬浮客服挂件 ================= -->
+<div id="chat-widget-container">
+    <div id="chat-panel">
+        <div id="chat-header">
+            <span>在线客服 (支持右下角缩放)</span>
+            <span id="close-chat" onclick="toggleChat()">×</span>
+        </div>
+        <div id="chat-status">连接状态: 正在建立长连接...</div>
+        <div id="chat-content"></div>
+        <form id="chat-input-area" onsubmit="sendChatMsg(event)">
+            <input id="chat-user-name" placeholder="昵称" style="width: 50px;" value="访客" />
+            <input id="chat-user-text" placeholder="输入咨询内容..." style="flex: 1;" autocomplete="off" />
+            <button type="submit" id="chat-send-btn">发送</button>
+        </form>
+    </div>
+    <div id="chat-trigger" onclick="toggleChat()">💬</div>
+</div>
+
 <script>
     // 检测是否在微信内置浏览器中
     function isWeChat() {
@@ -351,31 +495,24 @@
     function initEnvironment() {
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
-            // 微信环境下为了配合二维码被拉长到150px，将左边的小方框内边距也同步拉长，实现完美水平对称
             document.getElementById('wechat-num').style.padding = '19px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'none';
             document.getElementById('qrcode-ctrl').style.display = 'block';
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
-            
-            // 微信内部打开时，隐藏浏览器跳转按钮行
             document.getElementById('browser-jump-row').style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '号码添加';
-            document.getElementById('wechat-num').style.padding = '9px 0'; // 还原浏览器下默认内边距
+            document.getElementById('wechat-num').style.padding = '9px 0';
             document.getElementById('btn-copy-ctrl').style.display = 'inline-block';
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
-            
-            // 外部浏览器打开时，确保跳转按钮正常显示并拉开间距
             document.getElementById('browser-jump-row').style.display = 'flex';
         }
     }
 
-    // 执行环境初始化
     window.onload = initEnvironment;
 
-    // 处理下载按钮点击拦截
     function handleDownload(url) {
         if (isWeChat()) {
             document.getElementById('weixin-mask').style.display = 'block';
@@ -384,17 +521,14 @@
         }
     }
 
-    // 点击遮罩层任意地方可以隐藏它
     function hideMask() {
         document.getElementById('weixin-mask').style.display = 'none';
     }
 
-    // 一键复制V核心功能
     function copyWeChat() {
         const wechatNum = "_714541xyz";
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(wechatNum).then(() => {
-                // 💡 修改点：将原先带有 "in V" 的英文文案改成了全中文提示
                 showTextTip('wechat-tip', '复制成功，粘贴在V搜索添加', false);
             }).catch(err => {
                 fallbackCopy(wechatNum);
@@ -404,7 +538,6 @@
         }
     }
 
-    // 备用复制方案
     function fallbackCopy(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -420,7 +553,6 @@
         document.body.removeChild(textarea);
     }
 
-    // 留资发送到 Bark 接口
     function submitForm() {
         const inputEl = document.getElementById('user-wechat');
         const wechatId = inputEl.value.trim();
@@ -446,22 +578,94 @@
             });
     }
 
-    // 统一显隐状态函数
     function showTextTip(elementId, message, isError) {
         const tipEl = document.getElementById(elementId);
         tipEl.innerText = message;
-        
-        if (isError) {
-            tipEl.classList.add('error');
-        } else {
-            tipEl.classList.remove('error');
-        }
-        
+        if (isError) tipEl.classList.add('error');
+        else tipEl.classList.remove('error');
         tipEl.style.visibility = 'visible';
-        setTimeout(() => {
-            tipEl.style.visibility = 'hidden';
-        }, 3000);
+        setTimeout(() => { tipEl.style.visibility = 'hidden'; }, 3000);
     }
+
+    /* ================= 悬浮客服挂件逻辑 (已对接 VPS 198.23.160.199:3000) ================= */
+    const API_BASE = 'http://198.23.160.199:3000';
+
+    // 访客持久化唯一标识
+    let myUserId = localStorage.getItem('chat_uid');
+    if (!myUserId) {
+        myUserId = 'user_' + Math.random().toString(36).substring(2, 9);
+        localStorage.setItem('chat_uid', myUserId);
+    }
+
+    const chatStatusEl = document.getElementById('chat-status');
+
+    // 访客发送消息
+    async function sendChatMsg(e) {
+        e.preventDefault();
+        const textInput = document.getElementById('chat-user-text');
+        const nameInput = document.getElementById('chat-user-name');
+        const text = textInput.value.trim();
+        const name = nameInput.value.trim() || '访客';
+
+        if (!text) return;
+
+        textInput.value = '';
+
+        try {
+            await fetch(`${API_BASE}/api/send`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: myUserId, sender: name, text: text })
+            });
+            fetchHistory();
+        } catch (err) {
+            alert('消息发送失败，请检查网络连接');
+        }
+    }
+
+    // 拉取历史消息
+    async function fetchHistory() {
+        try {
+            const res = await fetch(`${API_BASE}/api/messages?userId=${myUserId}`);
+            const data = await res.json();
+            
+            chatStatusEl.innerText = '连接状态: ✅ 在线';
+            chatStatusEl.style.color = 'rgba(255,255,255,0.95)';
+
+            if (data.messages) {
+                const chatBox = document.getElementById('chat-content');
+                chatBox.innerHTML = '';
+                data.messages.forEach(m => {
+                    const div = document.createElement('div');
+                    const isKefu = m.sender === '客服';
+                    div.className = `chat-msg ${isKefu ? 'kefu' : 'visitor'}`;
+                    div.innerHTML = `<b>${m.sender}</b>${m.text}`;
+                    chatBox.appendChild(div);
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        } catch (e) {
+            chatStatusEl.innerText = '连接状态: ⚠️ 正在重连服务器...';
+            chatStatusEl.style.color = '#fef08a';
+        }
+    }
+
+    // 切换折叠与展开
+    function toggleChat() {
+        const panel = document.getElementById('chat-panel');
+        const trigger = document.getElementById('chat-trigger');
+        if (panel.style.display === 'none' || panel.style.display === '') {
+            panel.style.display = 'flex';
+            trigger.innerText = '×';
+            fetchHistory();
+        } else {
+            panel.style.display = 'none';
+            trigger.innerText = '💬';
+        }
+    }
+
+    // 每 3 秒自动拉取一次客服的最新回复
+    setInterval(fetchHistory, 3000);
 </script>
 
 </body>
