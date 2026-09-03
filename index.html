@@ -261,12 +261,12 @@
             color: #22c55e; 
         }
 
-        /* ================= 悬浮客服挂件样式 (支持右下角缩放与图片显示) ================= */
+        /* ================= 悬浮客服挂件样式 ================= */
         #chat-widget-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 2147483647;
+            z-index: 2147483640;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
@@ -278,7 +278,7 @@
             min-height: 340px;
             max-width: 90vw;
             max-height: 85vh;
-            resize: both; /* 允许右下角拖拽缩放 */
+            resize: both;
             overflow: hidden;
             background: #ffffff;
             border-radius: 16px;
@@ -354,8 +354,10 @@
             border-radius: 6px;
             margin-top: 4px;
             display: block;
-            cursor: pointer;
+            cursor: zoom-in;
+            transition: opacity 0.2s;
         }
+        .chat-msg img:hover { opacity: 0.9; }
 
         #chat-input-area {
             display: flex;
@@ -408,6 +410,39 @@
             transition: transform 0.2s;
         }
         #chat-trigger:hover { transform: scale(1.05); }
+
+        /* 全局大图灯箱预览模态框 */
+        #chat-image-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 2147483647;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        #chat-image-lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 34px;
+            cursor: pointer;
+            line-height: 1;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -499,6 +534,12 @@
         </form>
     </div>
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
+</div>
+
+<!-- 全屏大图灯箱模态层 -->
+<div id="chat-image-lightbox" onclick="closeLightbox()">
+    <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" onclick="event.stopPropagation()">
 </div>
 
 <script>
@@ -603,7 +644,7 @@
         setTimeout(() => { tipEl.style.visibility = 'hidden'; }, 3000);
     }
 
-    /* ================= 悬浮客服挂件核心逻辑 (带图片自动压缩) ================= */
+    /* ================= 悬浮客服挂件核心逻辑 ================= */
     const API_BASE = 'https://chat.714541.xyz';
 
     let myUserId = localStorage.getItem('chat_uid');
@@ -614,7 +655,17 @@
 
     const chatStatusEl = document.getElementById('chat-status');
 
-    // 底层通用发送函数
+    // 图片灯箱控制
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('chat-image-lightbox').style.display = 'flex';
+    }
+    function closeLightbox() {
+        document.getElementById('chat-image-lightbox').style.display = 'none';
+        document.getElementById('lightbox-img').src = '';
+    }
+
+    // 底层通用发送
     async function postMsg(content) {
         const name = document.getElementById('chat-user-name').value.trim() || '访客';
         try {
@@ -629,7 +680,7 @@
         }
     }
 
-    // 访客发送文本消息
+    // 发送文本
     function sendChatMsg(e) {
         e.preventDefault();
         const textInput = document.getElementById('chat-user-text');
@@ -639,7 +690,7 @@
         postMsg(text);
     }
 
-    // 访客发送图片（前端 Canvas 自动高压缩至 1024px / 质量 0.7）
+    // 发送图片（Canvas 压缩）
     function uploadImage(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -666,7 +717,6 @@
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, w, h);
 
-                // 压缩为轻量 JPEG
                 const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
                 postMsg(compressedBase64);
             };
@@ -676,7 +726,7 @@
         e.target.value = '';
     }
 
-    // 拉取历史消息并渲染
+    // 拉取历史消息
     async function fetchHistory() {
         try {
             const res = await fetch(`${API_BASE}/api/messages?userId=${myUserId}`);
@@ -695,7 +745,7 @@
 
                     let contentHtml = '';
                     if (m.text.startsWith('data:image/')) {
-                        contentHtml = `<img src="${m.text}" onclick="window.open(this.src)" title="点击查看大图" />`;
+                        contentHtml = `<img src="${m.text}" onclick="openLightbox('${m.text}')" title="点击放大预览" />`;
                     } else {
                         contentHtml = m.text;
                     }
@@ -711,7 +761,7 @@
         }
     }
 
-    // 展开/折叠面板
+    // 展开/收起面板
     function toggleChat() {
         const panel = document.getElementById('chat-panel');
         const trigger = document.getElementById('chat-trigger');
@@ -725,7 +775,6 @@
         }
     }
 
-    // 每 3 秒自动轮询一次新回复
     setInterval(fetchHistory, 3000);
 </script>
 
