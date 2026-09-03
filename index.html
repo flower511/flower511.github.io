@@ -550,6 +550,7 @@
     }
 
     function initEnvironment() {
+        const chatWidget = document.getElementById('chat-widget-container');
         if (isWeChat()) {
             document.getElementById('wechat-num').innerText = '长按扫码';
             document.getElementById('wechat-num').style.padding = '19px 0';
@@ -558,6 +559,9 @@
             document.getElementById('intro-tip-line').innerText = '直接长按下方二维码识别添加';
             document.getElementById('wechat-tip').style.display = 'none';
             document.getElementById('browser-jump-row').style.display = 'none';
+            
+            // 微信内部直接隐藏嵌入式客服
+            if (chatWidget) chatWidget.style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '号码添加';
             document.getElementById('wechat-num').style.padding = '9px 0';
@@ -565,6 +569,10 @@
             document.getElementById('qrcode-ctrl').style.display = 'none';
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
             document.getElementById('browser-jump-row').style.display = 'flex';
+            
+            // 外部浏览器显示挂件并启动轮询
+            if (chatWidget) chatWidget.style.display = 'block';
+            setInterval(fetchHistory, 3000);
         }
     }
 
@@ -728,6 +736,9 @@
 
     // 拉取历史消息
     async function fetchHistory() {
+        // 如果在微信内，不执行拉取
+        if (isWeChat()) return;
+
         try {
             const res = await fetch(`${API_BASE}/api/messages?userId=${myUserId}`);
             const data = await res.json();
@@ -774,8 +785,6 @@
             trigger.innerText = '💬';
         }
     }
-
-    setInterval(fetchHistory, 3000);
 </script>
 
 </body>
