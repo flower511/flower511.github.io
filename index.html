@@ -58,7 +58,6 @@
             box-sizing: border-box;
         }
         
-        /* 极致压缩第一个介绍区块的内边距 */
         .intro-section {
             padding-top: 10px;
             padding-bottom: 10px;
@@ -68,7 +67,6 @@
             margin-bottom: 0;
         }
 
-        /* 区块大标题 */
         .section-title {
             font-size: 14px;
             color: #0f172a;
@@ -77,12 +75,10 @@
             text-align: left;
         }
 
-        /* 介绍区块标题的下方留白 */
         .intro-section .section-title {
             margin-bottom: 6px;
         }
 
-        /* 统一布局行 */
         .row {
             display: flex;
             align-items: center;
@@ -94,7 +90,6 @@
             margin-bottom: 0;
         }
 
-        /* 基础虚线框样式（130px 标准款） */
         .label-box {
             width: 130px;
             padding: 9px 0;      
@@ -109,7 +104,6 @@
             white-space: nowrap;
         }
 
-        /* 规范化大框内部的 padding */
         .intro-box {
             width: 275px;
             margin: 0 auto;         
@@ -134,7 +128,6 @@
             margin-bottom: 0;
         }
 
-        /* 统一右侧绿色按钮样式 */
         .btn-link, .btn-copy, .btn-submit {
             width: 130px;
             border: none;
@@ -156,7 +149,6 @@
             background-color: #16a34a;
         }
 
-        /* 输入框组合行 */
         .input-group-wrapper {
             display: flex;
             flex-direction: column;
@@ -172,7 +164,6 @@
             width: 100%;
         }
 
-        /* 输入框样式 */
         .input-field {
             width: 130px;
             padding: 9px 12px;
@@ -189,7 +180,6 @@
             border-color: #16a34a;
         }
 
-        /* 统一的下方提示小字样式 */
         .action-tip {
             visibility: hidden;
             text-align: center;
@@ -204,7 +194,6 @@
             color: #ef4444;
         }
 
-        /* 动态二维码图片样式 */
         .qrcode-img {
             display: none; 
             width: 130px;
@@ -216,7 +205,7 @@
             background-color: #ffffff; 
         }
 
-        /* ================= 微信全屏黑幕遮罩 (同步统一规格) ================= */
+        /* ================= 微信全屏黑幕遮罩 ================= */
         .weixin-mask {
             position: fixed;
             top: 0;
@@ -359,39 +348,55 @@
         }
         .chat-msg img:hover { opacity: 0.9; }
 
+        /* 与 Web 端完全一致的底部输入工具栏 */
         #chat-input-area {
             display: flex;
-            gap: 6px;
-            padding: 8px;
-            background: #fff;
-            flex-shrink: 0;
             align-items: center;
-        }
-        #chat-input-area input[type="text"] {
-            padding: 7px 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            outline: none;
-            font-size: 13px;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #ffffff;
+            border-top: 1px solid #f1f5f9;
+            flex-shrink: 0;
         }
         #img-btn {
+            font-size: 20px;
             cursor: pointer;
-            font-size: 18px;
-            padding: 0 4px;
             user-select: none;
+            padding: 4px;
+            line-height: 1;
+        }
+        #chat-user-text {
+            flex: 1;
+            height: 38px;
+            padding: 0 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 19px;
+            outline: none;
+            font-size: 13.5px;
+            background: #f8fafc;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+        #chat-user-text:focus {
+            border-color: #22c55e;
+            background: #ffffff;
         }
         #chat-send-btn {
-            padding: 7px 12px;
+            height: 38px;
+            padding: 0 16px;
             background: #22c55e;
-            color: white;
+            color: #ffffff;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
+            border-radius: 19px;
+            font-size: 13.5px;
             font-weight: 600;
+            cursor: pointer;
             white-space: nowrap;
+            transition: background 0.2s;
         }
-        #chat-send-btn:hover { background: #16a34a; }
+        #chat-send-btn:hover {
+            background: #16a34a;
+        }
 
         #chat-trigger {
             width: 52px;
@@ -503,7 +508,7 @@
     </div>
 </div>
 
-<!-- ================= 微信全屏黑幕遮罩 (同步规格) ================= -->
+<!-- ================= 微信全屏黑幕遮罩 ================= -->
 <div id="weixin-mask" class="weixin-mask" onclick="hideMask()">
     <div class="mask-arrow">↗</div>
     <div class="mask-tip">请点击右上角菜单<br>选择 “在浏览器打开”</div>
@@ -521,10 +526,9 @@
         <div id="chat-content"></div>
         <form id="chat-input-area" onsubmit="sendChatMsg(event)">
             <label id="img-btn" title="发送图片">
-                📷
-                <input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="uploadImage(event)">
+                📷<input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="uploadImage(event)">
             </label>
-            <input id="chat-user-text" placeholder="输入咨询内容..." style="flex: 1;" autocomplete="off" />
+            <input id="chat-user-text" placeholder="输入咨询消息..." autocomplete="off" />
             <button type="submit" id="chat-send-btn">发送</button>
         </form>
     </div>
@@ -538,7 +542,6 @@
 </div>
 
 <script>
-    // 检测是否在微信内置浏览器中
     function isWeChat() {
         const ua = navigator.userAgent.toLowerCase();
         return (ua.indexOf('micromessenger') !== -1) || (ua.indexOf('wxwork') !== -1);
@@ -555,7 +558,6 @@
             document.getElementById('wechat-tip').style.display = 'none';
             document.getElementById('browser-jump-row').style.display = 'none';
             
-            // 微信内部直接隐藏嵌入式客服
             if (chatWidget) chatWidget.style.display = 'none';
         } else {
             document.getElementById('wechat-num').innerText = '号码添加';
@@ -565,7 +567,6 @@
             document.getElementById('intro-tip-line').innerText = '直接复制下方V搜索添加';
             document.getElementById('browser-jump-row').style.display = 'flex';
             
-            // 外部浏览器显示挂件并启动轮询
             if (chatWidget) chatWidget.style.display = 'block';
             setInterval(fetchHistory, 3000);
         }
@@ -656,7 +657,6 @@
         localStorage.setItem('chat_uid', myUserId);
     }
 
-    // 随机生成固定访客昵称（例如：访客_a1b2）
     let myUserName = localStorage.getItem('chat_uname');
     if (!myUserName) {
         myUserName = '访客_' + myUserId.slice(-4);
@@ -665,7 +665,6 @@
 
     const chatStatusEl = document.getElementById('chat-status');
 
-    // 图片灯箱控制
     function openLightbox(src) {
         document.getElementById('lightbox-img').src = src;
         document.getElementById('chat-image-lightbox').style.display = 'flex';
@@ -675,7 +674,6 @@
         document.getElementById('lightbox-img').src = '';
     }
 
-    // 底层通用发送
     async function postMsg(content) {
         try {
             await fetch(`${API_BASE}/api/send`, {
@@ -689,7 +687,6 @@
         }
     }
 
-    // 发送文本
     function sendChatMsg(e) {
         e.preventDefault();
         const textInput = document.getElementById('chat-user-text');
@@ -699,7 +696,6 @@
         postMsg(text);
     }
 
-    // 发送图片（Canvas 压缩）
     function uploadImage(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -735,9 +731,7 @@
         e.target.value = '';
     }
 
-    // 拉取历史消息
     async function fetchHistory() {
-        // 如果在微信内，不执行拉取
         if (isWeChat()) return;
 
         try {
@@ -773,7 +767,6 @@
         }
     }
 
-    // 展开/收起面板
     function toggleChat() {
         const panel = document.getElementById('chat-panel');
         const trigger = document.getElementById('chat-trigger');
