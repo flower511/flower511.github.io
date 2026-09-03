@@ -125,7 +125,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* 通过控制每行 div 的 margin-bottom，让每行之间的间隙绝对一致 */
         .intro-line {
             margin-bottom: 6px;
             line-height: 1.2;
@@ -262,7 +261,7 @@
             color: #22c55e; 
         }
 
-        /* ================= 悬浮客服挂件样式 (自适应缩放) ================= */
+        /* ================= 悬浮客服挂件样式 (支持右下角缩放) ================= */
         #chat-widget-container {
             position: fixed;
             bottom: 20px;
@@ -279,7 +278,7 @@
             min-height: 340px;
             max-width: 90vw;
             max-height: 85vh;
-            resize: both; /* 启用右下角拉伸缩放 */
+            resize: both; /* 允许右下角拖拽缩放 */
             overflow: hidden;
             background: #ffffff;
             border-radius: 16px;
@@ -331,14 +330,14 @@
             line-height: 1.4;
             word-break: break-all;
         }
-        /* 访客自身发送的气泡 */
+        /* 访客发言气泡 */
         .chat-msg.visitor {
             align-self: flex-end;
             background: #dcfce7;
             color: #14532d;
             border: 1px solid #bbf7d0;
         }
-        /* 客服回复的气泡 */
+        /* 客服回复气泡 */
         .chat-msg.kefu {
             align-self: flex-start;
             background: #ffffff;
@@ -587,8 +586,8 @@
         setTimeout(() => { tipEl.style.visibility = 'hidden'; }, 3000);
     }
 
-    /* ================= 悬浮客服挂件逻辑 (已对接 VPS 198.23.160.199:3000) ================= */
-    const API_BASE = 'http://198.23.160.199:3000';
+    /* ================= 悬浮客服挂件逻辑 (已接入 HTTPS: chat.714541.xyz) ================= */
+    const API_BASE = 'https://chat.714541.xyz';
 
     // 访客持久化唯一标识
     let myUserId = localStorage.getItem('chat_uid');
